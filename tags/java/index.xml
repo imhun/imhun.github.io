@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on 人心如花木，皆向阳而生</title>
+    <link>https://blog.imhu.xyz/tags/java/</link>
+    <description>Recent content in java on 人心如花木，皆向阳而生</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 14 Aug 2015 08:58:02 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>java多字节字符串按字节截取</title>
+      <link>https://blog.imhu.xyz/post/2015-08-14.java_substring/</link>
+      <pubDate>Fri, 14 Aug 2015 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2015-08-14.java_substring/</guid>
+      <description>java多字节字符串截取，如果按照通常的按字节长度截取，有可能从字符内部截断，导致结果字符串最后出现乱码，因此需要做一下特别处理。 算法思路 1</description>
+    </item>
+    
+    <item>
+      <title>ebs 使用jre 7 登录问题</title>
+      <link>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</link>
+      <pubDate>Thu, 11 Sep 2014 15:27:38 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</guid>
+      <description>JRE 7登录EBS时，如果服务器端的jre未升级至jre 7，会提示如下错误 FRM-92095: Oracle JInitiator version too low. Please install version 1.1.8.2 or higher 这种情况下有三个办法： 1.windows 7的情况下，添加一个系</description>
+    </item>
+    
+    <item>
+      <title>使用jtopen对EBCDIC码与GBK之间进行互相转换</title>
+      <link>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</link>
+      <pubDate>Wed, 23 Oct 2013 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</guid>
+      <description>AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进</description>
+    </item>
+    
+  </channel>
+</rss>

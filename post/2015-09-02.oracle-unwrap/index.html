@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Oracle 加密package解密(unwrap) - 人心如花木，皆向阳而生</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Polars" /><meta name="description" content="最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找" /><meta name="keywords" content="技术, 大数据, rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.imhu.xyz/post/2015-09-02.oracle-unwrap/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Oracle 加密package解密(unwrap)" />
+<meta property="og:description" content="最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.imhu.xyz/post/2015-09-02.oracle-unwrap/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-09-02T08:58:02+00:00" />
+<meta property="article:modified_time" content="2015-09-02T08:58:02+00:00" />
+
+<meta itemprop="name" content="Oracle 加密package解密(unwrap)">
+<meta itemprop="description" content="最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找"><meta itemprop="datePublished" content="2015-09-02T08:58:02+00:00" />
+<meta itemprop="dateModified" content="2015-09-02T08:58:02+00:00" />
+<meta itemprop="wordCount" content="2021">
+<meta itemprop="keywords" content="oralce," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Oracle 加密package解密(unwrap)"/>
+<meta name="twitter:description" content="最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Polars</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Polars</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Oracle 加密package解密(unwrap)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-09-02 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 2021 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#解密算法解析">解密算法解析</a>
+      <ul>
+        <li><a href="#加密过程">加密过程</a></li>
+        <li><a href="#解密过程">解密过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#解密程序源码">解密程序源码</a>
+      <ul>
+        <li><a href="#java-源码">java 源码</a></li>
+        <li><a href="#解密plsql主程序">解密plsql主程序</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找过程中，花了点时间研究了下解密的过程，简单记录一下。</p>
+<!-- more -->
+<h1 id="解密算法解析">解密算法解析</h1>
+<h2 id="加密过程">加密过程</h2>
+<p>要解密，首先要了解加密的原理，在这几个版本的oracle中，解密的理论依据都来源于 <em>&ldquo;The oracle hacker&rsquo;s handbook&rdquo; by David Litchfield</em> 这本书，书中介绍了wrap的过程：</p>
+<blockquote>
+<ol>
+<li>将源码使用lz压缩算法压缩，得到压缩串lzstr</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>对压缩串做sha-1运算，得到40位的哈希串shstr</li>
+<li>将哈希串与压缩串拼在一起，shstr+lzstr</li>
+<li>将得到的字符串再按字节执行字典表替换</li>
+<li>再执行base64编码，就得到了加密的字符串</li>
+</ol>
+<h2 id="解密过程">解密过程</h2>
+<p>如果要解密加密以后的字符串，按照以上加密的过程反向推算，可以发现最关键的就是第4步中的字典表替换过程，要解决这个问题，我们就要得到这个替换的字典表，幸运的是，经过测试发现，oracle的这个字典表是固定的按字节映射，所以：
+我们可以通过wrap加密一个简单字符串，比如<code>create PACKAGE a0</code>,得到加密后的密文，然后执行一次base64解码，就能得到替换后的字符串，代码如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="n">utl_encode</span><span class="p">.</span><span class="n">base64_decode</span><span class="p">(</span><span class="n">utl_raw</span><span class="p">.</span><span class="n">cast_to_raw</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">rtrim</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="n">wrap_text</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">           </span><span class="n">instr</span><span class="p">(</span><span class="n">wrap</span><span class="p">.</span><span class="n">wrap</span><span class="p">,</span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">)))),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="mi">41</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">dual</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里说明一下，wrap以后的密文里，前面20行是没有用的，密文是从第21行开始的，第21行的前40个字符，是拼接的哈希串，从第41个字符开始才是字典表转换后的密文
+本例中，得到的结果为</p>
+<pre><code>78DA0B7074F67674775548346000001185029E
+</code></pre>
+<p>对字符串<code>create PACKAGE a0</code>执行lz压缩，得到字典表转换前的字符串，本例中的结果为</p>
+<pre><code>308399B8F5339FF5BF5C5A2170A6A6F302E141
+</code></pre>
+<p>这样我们得到了转换前和转换后的字符串，就可以按字节建立起我们需要的字典表了，比如本例中：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">转换前－转换后
+</span></span><span class="line"><span class="cl">30        78
+</span></span><span class="line"><span class="cl">83        DA
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>依次类推，我们就可以建立起这个字典表，因为一个字节从00-FF有256个字符，所以相应的这个典表应该有256条记录，这里我们只得到了其中的一部分，还需要选用不同的字符串，多次穷举运算，最终得到全部的记录。事实上，因为这个字典表是固定的，所以得到的结果可以重复使用。当然也可以直接使用别人提供的。
+有了字典表，接下来的工作就比较简单了，按照加密过程反向运算即可：</p>
+<blockquote>
+<ol>
+<li>从数据库中得到package的密文</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>base64解码</li>
+<li>字典表反向映射</li>
+<li>去掉前40位哈希串</li>
+<li>lz解压缩</li>
+</ol>
+<h1 id="解密程序源码">解密程序源码</h1>
+<p>这里贴上部分源码，供参考
+LZ解压和压缩的代码，使用java source过程，为了支持比较大的package，使用CLOB作为参数类型，经测试，可以支持较大的程序包</p>
+<h2 id="java-源码">java 源码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">create</span> <span class="n">or</span> <span class="n">replace</span> <span class="n">java</span> <span class="n">source</span> <span class="n">named</span> <span class="n">CUX_UNWRAPPER</span>
+</span></span><span class="line"><span class="cl"><span class="n">as</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.zip.Deflater</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.zip.InflaterInputStream</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">oracle.jdbc.OracleDriver</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">oracle.sql.CLOB</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UNWRAPPER</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//解压缩
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CLOB</span> <span class="nf">Inflate</span><span class="o">(</span><span class="n">CLOB</span> <span class="n">src</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">SQLException</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">StringBuffer</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="na">stringValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">         <span class="k">try</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ByteArrayInputStream</span> <span class="n">bis</span> <span class="o">=</span> 
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">ByteArrayInputStream</span><span class="o">(</span><span class="n">decodeHex</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//ByteArrayInputStream bis = new ByteArrayInputStream(src);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">InflaterInputStream</span> <span class="n">iis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InflaterInputStream</span><span class="o">(</span><span class="n">bis</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">iis</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="n">c</span> <span class="o">!=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">iis</span><span class="o">.</span><span class="na">read</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span><span class="n">c</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">           <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">       
+</span></span><span class="line"><span class="cl">        <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="s">&#34;jdbc:default:connection:&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">CLOB</span> <span class="n">clob</span> <span class="o">=</span>  <span class="n">CLOB</span><span class="o">.</span><span class="na">createTemporary</span><span class="o">(</span><span class="n">conn</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="n">CLOB</span><span class="o">.</span><span class="na">DURATION_SESSION</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">clob</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="n">1</span><span class="o">,</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">clob</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">Deflate</span><span class="o">(</span><span class="n">String</span> <span class="n">src</span><span class="o">,</span> <span class="kt">int</span> <span class="n">quality</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">byte</span><span class="o">[]</span> <span class="n">tmp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">src</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="n">100</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Deflater</span> <span class="n">defl</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Deflater</span><span class="o">(</span><span class="n">quality</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">defl</span><span class="o">.</span><span class="na">setInput</span><span class="o">(</span><span class="n">src</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(</span><span class="s">&#34;UTF-8&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">defl</span><span class="o">.</span><span class="na">finish</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="n">defl</span><span class="o">.</span><span class="na">deflate</span><span class="o">(</span><span class="n">tmp</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">byte</span><span class="o">[]</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">cnt</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">cnt</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">res</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">toDigit</span><span class="o">(</span><span class="kt">char</span> <span class="n">ch</span><span class="o">,</span> <span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">digit</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">digit</span><span class="o">(</span><span class="n">ch</span><span class="o">,</span> <span class="n">16</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">digit</span> <span class="o">==</span> <span class="o">-</span><span class="n">1</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&#34;illegal hexadecimal character &#34;</span> <span class="o">+</span> <span class="n">ch</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">                                       <span class="s">&#34; at index &#34;</span> <span class="o">+</span> <span class="n">index</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">digit</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">//16进制字符串转字节数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">decodeHex</span><span class="o">(</span><span class="kt">char</span><span class="o">[]</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">((</span><span class="n">len</span> <span class="o">&amp;</span> <span class="n">0x01</span><span class="o">)</span> <span class="o">!=</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&#34;odd  number of characters &#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">byte</span><span class="o">[]</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">len</span> <span class="o">&gt;&gt;</span> <span class="n">1</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="n">toDigit</span><span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">j</span><span class="o">)</span> <span class="o">&lt;&lt;</span> <span class="n">4</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">j</span><span class="o">++;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span> <span class="o">|</span> <span class="n">toDigit</span><span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">j</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">j</span><span class="o">++;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">out</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)(</span><span class="n">f</span> <span class="o">&amp;</span> <span class="n">0xFF</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">out</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">编译java</span> <span class="n">source</span>
+</span></span><span class="line"><span class="cl"><span class="n">alter</span> <span class="n">java</span> <span class="n">source</span> <span class="n">CUX_UNWRAPPER</span> <span class="n">compile</span>
+</span></span><span class="line"><span class="cl"><span class="o">/</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="解密plsql主程序">解密plsql主程序</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="c1">--程序包体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">create</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">replace</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="n">cux_unwrapper</span><span class="w"> </span><span class="k">is</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">function</span><span class="w"> </span><span class="n">deflate</span><span class="p">(</span><span class="n">src</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">varchar2</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="k">is</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">begin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">deflate</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">end</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">--压缩
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">function</span><span class="w"> </span><span class="n">deflate</span><span class="p">(</span><span class="n">src</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">varchar2</span><span class="p">,</span><span class="w"> </span><span class="n">quality</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nb">number</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">raw</span><span class="w"> </span><span class="k">as</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">language</span><span class="w"> </span><span class="n">java</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="s1">&#39;UNWRAPPER.Deflate( java.lang.String, int ) return byte[]&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">--解压缩
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">function</span><span class="w"> </span><span class="n">inflate</span><span class="p">(</span><span class="n">src</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">clob</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="k">clob</span><span class="w"> </span><span class="k">as</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">language</span><span class="w"> </span><span class="n">java</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="s1">&#39;UNWRAPPER.Inflate( oracle.sql.CLOB ) return oracle.sql.CLOB&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">--输出clob
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">procedure</span><span class="w"> </span><span class="n">out_put</span><span class="p">(</span><span class="n">p_clob</span><span class="w"> </span><span class="k">clob</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_len</span><span class="w">     </span><span class="nb">integer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_pos</span><span class="w">     </span><span class="nb">integer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_chunk</span><span class="w">   </span><span class="nb">integer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_buffer</span><span class="w">  </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">4000</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_amount</span><span class="w">  </span><span class="nb">integer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_ins_pos</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">begin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_len</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">getlength</span><span class="p">(</span><span class="n">p_clob</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">while</span><span class="w"> </span><span class="n">l_pos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">l_len</span><span class="w"> </span><span class="n">loop</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">l_len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l_pos</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">l_chunk</span><span class="w"> </span><span class="k">then</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">l_ins_pos</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">l_len</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">else</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">l_ins_pos</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">instr</span><span class="p">(</span><span class="n">p_clob</span><span class="p">,</span><span class="w"> </span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="n">l_pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">l_chunk</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">l_amount</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">l_ins_pos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l_pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">dbms_lob</span><span class="p">.</span><span class="k">read</span><span class="p">(</span><span class="n">p_clob</span><span class="p">,</span><span class="w"> </span><span class="n">l_amount</span><span class="p">,</span><span class="w"> </span><span class="n">l_pos</span><span class="p">,</span><span class="w"> </span><span class="n">l_buffer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">dbms_output</span><span class="p">.</span><span class="n">put_line</span><span class="p">(</span><span class="n">l_buffer</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">l_pos</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">l_ins_pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="n">loop</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="n">out_put</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">--解密主程序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">unwrap</span><span class="p">(</span><span class="n">p_owner</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                   </span><span class="n">p_name</span><span class="w">  </span><span class="k">IN</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                   </span><span class="n">p_type</span><span class="w">  </span><span class="k">IN</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_wrap</span><span class="w"> </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">32767</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_inf</span><span class="w">       </span><span class="k">clob</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_res</span><span class="w">       </span><span class="k">clob</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_src</span><span class="w">       </span><span class="k">clob</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_inflate</span><span class="w">   </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">32767</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_temp</span><span class="w">      </span><span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">32767</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_bt</span><span class="w">        </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">32767</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_text</span><span class="w">      </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">32767</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_char</span><span class="w">      </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_len</span><span class="w">       </span><span class="nb">number</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_slen</span><span class="w">      </span><span class="nb">integer</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_offset</span><span class="w">    </span><span class="nb">integer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_chunk_len</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="mi">10080</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">--解密字节对照字典表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">l_dict</span><span class="w"> </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;3D6585B318DBE287F152AB634BB5A05F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;7D687B9B24C228678ADEA4261E03EB17&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;6F343E7A3FD2A96A0FE935561FB14D10&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;78D975F6BC4104816106F9ADD6D5297E&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;869E79E505BA84CC6E278EB05DA8F39F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;D0A271B858DD2C38994C480755E4538C&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;46B62DA5AF322240DC50C3A1258B9C16&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;605CCFFD0C981CD4376D3C3A30E86C31&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;47F533DA43C8E35E1994ECE6A39514E0&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;9D64FA5915C52FCABB0BDFF297BF0A76&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;B449445A1DF0009621807F1A82394FC1&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;A7D70DD1D8FF139370EE5BEFBE09B977&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;72E7B254B72AC7739066200E51EDF87C&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;8F2EF412C62B83CDACCB3BC44EC06936&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;6202AE88FCAA4208A64557D39ABDE123&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;8D924A1189746B91FBFEC901EA1BF7CE&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_sl</span><span class="w">   </span><span class="n">varchar2</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;000102030405060708090A0B0C0D0E0F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;101112131415161718191A1B1C1D1E1F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;202122232425262728292A2B2C2D2E2F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;303132333435363738393A3B3C3D3E3F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;404142434445464748494A4B4C4D4E4F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;505152535455565758595A5B5C5D5E5F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;606162636465666768696A6B6C6D6E6F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;707172737475767778797A7B7C7D7E7F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;808182838485868788898A8B8C8D8E8F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;909192939495969798999A9B9C9D9E9F&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;A0A1A2A3A4A5A6A7A8A9AAABACADAEAF&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;D0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEF&#39;</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="s1">&#39;F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">cursor</span><span class="w"> </span><span class="n">c_src</span><span class="w"> </span><span class="k">is</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="n">src</span><span class="p">.</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">.</span><span class="nb">text</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">DBA_SOURCE</span><span class="w"> </span><span class="n">src</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="k">owner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_owner</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="k">AND</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">         </span><span class="k">AND</span><span class="w"> </span><span class="k">TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_type</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">line</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">BEGIN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">createtemporary</span><span class="p">(</span><span class="n">lob_loc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">l_inf</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                             </span><span class="k">cache</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">TRUE</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                             </span><span class="n">dur</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dbms_lob</span><span class="p">.</span><span class="k">session</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">--取得package密文
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">rec</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">c_src</span><span class="w"> </span><span class="n">loop</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">l_src</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">l_src</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">rtrim</span><span class="p">(</span><span class="n">rec</span><span class="p">.</span><span class="nb">text</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="n">loop</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="c1">--out_put(&#39;source:&lt;&#39;||l_src||&#39;&gt;&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">l_src</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">rtrim</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="n">l_src</span><span class="p">,</span><span class="w"> </span><span class="n">instr</span><span class="p">(</span><span class="n">l_src</span><span class="p">,</span><span class="w"> </span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">l_src</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="k">replace</span><span class="p">(</span><span class="n">l_src</span><span class="p">,</span><span class="w"> </span><span class="n">chr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">-- dbms_output.put_line(&#39;source:&lt;&#39;||l_src||&#39;&gt;&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="c1">--l_src:=substr(l_src,41);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">--base64解码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">l_len</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">getlength</span><span class="p">(</span><span class="n">l_src</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">while</span><span class="w"> </span><span class="n">l_offset</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">l_len</span><span class="w"> </span><span class="n">loop</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">l_len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l_offset</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10080</span><span class="w"> </span><span class="k">then</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">l_chunk_len</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l_len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l_offset</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">l_temp</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">l_src</span><span class="p">,</span><span class="w"> </span><span class="n">l_chunk_len</span><span class="p">,</span><span class="w"> </span><span class="n">l_offset</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="n">l_bt</span><span class="w">   </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">utl_encode</span><span class="p">.</span><span class="n">base64_decode</span><span class="p">(</span><span class="n">utl_raw</span><span class="p">.</span><span class="n">cast_to_raw</span><span class="p">(</span><span class="n">l_temp</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">l_bt</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="k">then</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">l_offset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">then</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="c1">--去掉前40位哈希串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">          </span><span class="n">l_bt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="n">l_bt</span><span class="p">,</span><span class="w"> </span><span class="mi">41</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">-- l_wrap := l_wrap || l_bt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="c1">--字典表转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="n">l_bt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">utl_raw</span><span class="p">.</span><span class="k">translate</span><span class="p">(</span><span class="n">l_bt</span><span class="p">,</span><span class="w"> </span><span class="n">l_sl</span><span class="p">,</span><span class="w"> </span><span class="n">l_dict</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">l_offset</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">l_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">l_chunk_len</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">--    l_inflate := l_inflate || l_bt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="n">dbms_lob</span><span class="p">.</span><span class="n">writeappend</span><span class="p">(</span><span class="n">l_inf</span><span class="p">,</span><span class="w"> </span><span class="k">length</span><span class="p">(</span><span class="n">l_bt</span><span class="p">),</span><span class="w"> </span><span class="n">l_bt</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="n">loop</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="cm">/* dbms_output.put_line(&#39;base:&#39; || l_wrap);
+</span></span></span><span class="line"><span class="cl"><span class="cm">    dbms_output.put_line(&#39;&lt;&#39; || l_inflate || &#39;&gt;&#39;);*/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">--解压缩
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">l_res</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">inflate</span><span class="p">(</span><span class="n">l_inf</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">out_put</span><span class="p">(</span><span class="n">l_res</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="n">unwrap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">END</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">/</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Polars</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2015-09-02
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/oralce/">oralce</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2015-09-11.oracle_recyclebin_problem/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Oracle recyclebin引起library cache lock事件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2015-08-14.java_substring/">
+            <span class="next-text nav-default">java多字节字符串按字节截取</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>通过let&#39;s encrypt配置网站https - 人心如花木，皆向阳而生</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Polars" /><meta name="description" content="网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&amp;rsquo;s encrypt" /><meta name="keywords" content="技术, 大数据, rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.imhu.xyz/post/2016-10-08-nginx-letsencrypt/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="通过let&#39;s encrypt配置网站https" />
+<meta property="og:description" content="网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&rsquo;s encrypt" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.imhu.xyz/post/2016-10-08-nginx-letsencrypt/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-10-08T19:33:34+00:00" />
+<meta property="article:modified_time" content="2016-10-08T19:33:34+00:00" />
+
+<meta itemprop="name" content="通过let&#39;s encrypt配置网站https">
+<meta itemprop="description" content="网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&rsquo;s encrypt"><meta itemprop="datePublished" content="2016-10-08T19:33:34+00:00" />
+<meta itemprop="dateModified" content="2016-10-08T19:33:34+00:00" />
+<meta itemprop="wordCount" content="950">
+<meta itemprop="keywords" content="ssl,nginx," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="通过let&#39;s encrypt配置网站https"/>
+<meta name="twitter:description" content="网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&rsquo;s encrypt"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Polars</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Polars</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">通过let&#39;s encrypt配置网站https</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-10-08 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 950 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#创建证书">创建证书</a></li>
+        <li><a href="#配置nginx">配置nginx</a></li>
+        <li><a href="#证书更新">证书更新</a>
+          <ul>
+            <li><a href="#配置systemd-计划任务">配置systemd 计划任务</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：<a href="https://letsencrypt.org">let&rsquo;s encrypt</a>。免费，安装方便，配置简单，值得信赖。 <br>
+let&rsquo;s encrypt的证书现在支持自动颁发安装，客户端工具为certbot，官方网站：<a href="https://certbot.eff.org/">https://certbot.eff.org/</a>，不同的操作系统，certbot程序名称不一样，我的服务器为ubuntu，对应的程序是:</p>
+<blockquote>
+<p><code>letsencrypt</code></p>
+</blockquote>
+<!-- more -->
+<h2 id="创建证书">创建证书</h2>
+<p>安装let&rsquo;s encrypt 客户端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install letsencrypt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用letsencrypt创建证书，如下所示，可以指定多个域名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">letsencrypt certonly --webroot -w /var/www/blog -d blog.xxx.org -w /var/www/thing -d thing.is -d m.thing.is
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>生成的域名保存在目录：<code>/etc/letsencrypt/live/blog.xxx.org/</code>中:</p>
+<ul>
+<li>cert.pem: 域名证书</li>
+<li>chain.pem: Let&rsquo;s Encrypt chain 证书</li>
+<li>fullchain.pem: cert.pem 和 chain.pem 组合证书</li>
+<li>privkey.pem: 证书私钥</li>
+</ul>
+<p>生成强Diffie-Hellman Group(可选)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="配置nginx">配置nginx</h2>
+<p>修改nginx配置文件，将对应域名修改为https访问，修改server配置如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server {
+</span></span><span class="line"><span class="cl">  listen 443 ssl  http2 default_server;
+</span></span><span class="line"><span class="cl">  root /var/www/blog; # 这里是你网站的路径 路径下包含index.html等一系列文件
+</span></span><span class="line"><span class="cl">  index index.html index.htm;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  server_name blog.hutang.us;
+</span></span><span class="line"><span class="cl">  ssl_certificate /etc/letsencrypt/live/blog.hutang.us/fullchain.pem;
+</span></span><span class="line"><span class="cl">  ssl_certificate_key /etc/letsencrypt/live/blog.hutang.us/privkey.pem;
+</span></span><span class="line"><span class="cl">  ssl_ciphers &#34;EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5&#34;;
+</span></span><span class="line"><span class="cl">  ssl_ecdh_curve secp384r1;
+</span></span><span class="line"><span class="cl">  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+</span></span><span class="line"><span class="cl">  ssl_prefer_server_ciphers on;
+</span></span><span class="line"><span class="cl">  ssl_session_cache shared:SSL:10m;
+</span></span><span class="line"><span class="cl">  ssl_session_tickets off;
+</span></span><span class="line"><span class="cl">  ssl_stapling on;
+</span></span><span class="line"><span class="cl">  ssl_stapling_verify on;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  ssl_dhparam /etc/ssl/certs/dhparam.pem;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  #允许访问let&#39;s encrypt 的webroot 插件目录
+</span></span><span class="line"><span class="cl">  location ~ /.well-known {
+</span></span><span class="line"><span class="cl">                allow all;
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>http访问重写至https</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server {
+</span></span><span class="line"><span class="cl">  listen 80;
+</span></span><span class="line"><span class="cl">  server_name blog.xxx.org;
+</span></span><span class="line"><span class="cl">  rewrite ^(.*)$ https://$host$1 permanent;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其他域名重定向</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">server {
+</span></span><span class="line"><span class="cl">  server_name xxx.org;
+</span></span><span class="line"><span class="cl">  return 301 https://blog.xxx.org$request_uri;
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配置完成以后，重启nginx: <code>sudo systemctl restart nginx</code></p>
+<p>然后就可以通过https访问你的网站了，如图：
+<img src="2016-10-08-nginx-letsencrypt/2016-10-18-10-11-12.png" alt="ssl certificate"></p>
+<h2 id="证书更新">证书更新</h2>
+<p>let&rsquo;s encrypt的证书有效期为3个月，到期之前需要重新生成才能继续使用，通过以下命令重新生成证书： <br>
+<code>letsencrypt renew </code></p>
+<p>可以配置计划任务定时更新证书，以免忘记。</p>
+<h3 id="配置systemd-计划任务">配置systemd 计划任务</h3>
+<ul>
+<li>创建letsencrypt服务，新建文件: <code>/etc/systemd/system/letsencrypt.service</code>，输入以下内容：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=letsencrypt renew
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">[Service]
+</span></span><span class="line"><span class="cl">Type=simple
+</span></span><span class="line"><span class="cl">ExecStart=/usr/bin/letsencrypt renew
+</span></span><span class="line"><span class="cl">ExecStop=
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>启用服务 <br>
+<code>sudo systemctl enable letsencrypt.service</code></li>
+<li>创建定时器，新建文件: <code>/etc/systemd/system/letsencrypt.timer</code> 输入以下内容：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Unit]
+</span></span><span class="line"><span class="cl">Description=run letsencrypt renew every day
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">[Timer]
+</span></span><span class="line"><span class="cl">OnBootSec=10min
+</span></span><span class="line"><span class="cl">OnUnitActiveSec=12h
+</span></span><span class="line"><span class="cl">Unit=letsencrypt.service
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[Install]
+</span></span><span class="line"><span class="cl">WantedBy=multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>OnBootSec表示系统启动后执行 <br>
+官方建议计划为每12小时执行一次，实际上renew程序在证书到期之前都不会执行任何操作。</p>
+<ul>
+<li>启用定时器，开机启动<br>
+<code>sudo systemctl enable letsencrypt.timer</code></li>
+<li>开启定时器 <br>
+<code>sudo systemctl start letsencrypt.timer</code></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Polars</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2016-10-08
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/ssl/">ssl</a>
+          <a href="/tags/nginx/">nginx</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-10-17.hexo-blog-config-1-md/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">hexo在vps上搭建blog</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2016-04-16.xiaomi_r2d_ssr/">
+            <span class="next-text nav-default">小米路由器2(R2D) 编译shadowsocks-libev 最新版</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

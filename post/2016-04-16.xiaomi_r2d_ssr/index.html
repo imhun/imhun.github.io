@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>小米路由器2(R2D) 编译shadowsocks-libev 最新版 - 人心如花木，皆向阳而生</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Polars" /><meta name="description" content="最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是" /><meta name="keywords" content="技术, 大数据, rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="小米路由器2(R2D) 编译shadowsocks-libev 最新版" />
+<meta property="og:description" content="最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-04-16T14:04:14+00:00" />
+<meta property="article:modified_time" content="2016-04-16T14:04:14+00:00" />
+
+<meta itemprop="name" content="小米路由器2(R2D) 编译shadowsocks-libev 最新版">
+<meta itemprop="description" content="最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是"><meta itemprop="datePublished" content="2016-04-16T14:04:14+00:00" />
+<meta itemprop="dateModified" content="2016-04-16T14:04:14+00:00" />
+<meta itemprop="wordCount" content="1650">
+<meta itemprop="keywords" content="路由器,shadowsocks," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="小米路由器2(R2D) 编译shadowsocks-libev 最新版"/>
+<meta name="twitter:description" content="最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Polars</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Polars</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">小米路由器2(R2D) 编译shadowsocks-libev 最新版</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2016-04-16 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 1650 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#编译步骤">编译步骤</a>
+      <ul>
+        <li><a href="#准备工作">准备工作：</a></li>
+        <li><a href="#环境变量">环境变量</a></li>
+        <li><a href="#安装必须的package">安装必须的package</a></li>
+        <li><a href="#编译依赖包">编译依赖包</a></li>
+        <li><a href="#编译shadowsock-libev">编译shadowsock-libev</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是很容易自己装插件上去的，结果弄了以后才知道。。。太幼稚！</p>
+<p>小米路由器2目前的固件内核居然还是2.6，openwrt的版本：12.09，几年前的版本，也就是从一代开始就没有更新过，所以目前还没有2代上能用的openwrt固件。</p>
+<!-- more -->
+<p>不能自己刷新版的固件，小米本身这个固件又是深度定制过的，显然不支持标准的openwrt插件。。。顿时感觉当下很忧郁啊。。。</p>
+<p>结果就只剩一条路，自己编译！好在小米号称是支持开放的，发布了工具链，不用拿第三方的折腾了。关于小米路由器相关的工具链，这里有一个列表：<a href="http://wiki.jackslab.org/%E5%B0%8F%E7%B1%B3%E8%B7%AF%E7%94%B1%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E9%93%BE">小米路由器相关工具链</a>。</p>
+<p>一不小心写了这么多，闲话少说，开始很忧郁的折腾之路，中间过程就不细说了，说起来都是泪。。。既然是给有同样目的的人参考，我就只列一下那条通往成功的路吧。（说起来也是参考了不少网文，不过由于年代久远，已经不怎么适用了）</p>
+<h1 id="编译步骤">编译步骤</h1>
+<h2 id="准备工作">准备工作：</h2>
+<ol>
+<li>小米路由器工具链，目前有32，和64两个版本，我只说64位的版本，可以从这里下载SDK:
+<a href="http://bigota.miwifi.com/xiaoqiang/sdk/tools/package/sdk_package.zip">http://bigota.miwifi.com/xiaoqiang/sdk/tools/package/sdk_package.zip</a>
+这个是sdk的包，解压以后sdk_package/toolchain目录就是我们要的工具链。如果不清楚下载到的工具链是什么版本的，可以file 一下bin目录中的这个文件:
+arm-xiaomi-linux-uclibcgnueabi-gcc：</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">file arm-xiaomi-linux-uclibcgnueabi-gcc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>linux系统，小米路由器官方只发布了linux的工具链，一般是ubuntu 64位，版本不限，我在16.04上编译成功了。</li>
+<li>一些常用的工具这里就不一一列举了，比如git等，如果系统里没有，请自行安装。</li>
+</ol>
+<h2 id="环境变量">环境变量</h2>
+<p>接下来是相关配置，我的整个过程在/home/nana/miwifi这个目录中执行，</p>
+<ol>
+<li>在PATH中导入工具链目录，本例中工具链的目录:
+/home/nana/miwifi/sdk_package/toolchain，在shell中执行以下命令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/home/nana/miwifi/sdk_package/toolchain/bin
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CC</span><span class="o">=</span>arm-xiaomi-linux-uclibcgnueabi-gcc
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CXX</span><span class="o">=</span>arm-xiaomi-linux-uclibcgnueabi-g++
+</span></span><span class="line"><span class="cl">mkdir repo  <span class="c1">#用来保存git clone的源码</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="安装必须的package">安装必须的package</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> sudo apt-get install build-essential autoconf libtool libssl-dev
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编译依赖包">编译依赖包</h2>
+<p>目前最新版的shadowsocks-libev需要openssl,zlib,pcre库，所以要先编译这几个库</p>
+<p>4.1 编译zlib</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget http://downloads.sourceforge.net/project/libpng/zlib/1.2.8/zlib-1.2.8.tar.gz
+</span></span><span class="line"><span class="cl">tar -zxvf zlib-1.2.8.tar.gz
+</span></span><span class="line"><span class="cl">mkdir zlib
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> zlib-1.2.8
+</span></span><span class="line"><span class="cl">./configure --prefix<span class="o">=</span>/home/nana/miwifi/zlib
+</span></span><span class="line"><span class="cl">make
+</span></span><span class="line"><span class="cl">make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>4.2 编译openssl
+目前高于1.0.1t的版本编译有问题，所以只用1.0.1t版的就行了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /home/nana/miwifi
+</span></span><span class="line"><span class="cl">mkdir openssl
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> repo
+</span></span><span class="line"><span class="cl">wget https://github.com/openssl/openssl/archive/OpenSSL_1_0_1t.zip
+</span></span><span class="line"><span class="cl">unzip OpenSSL_1_0_1t.zip 
+</span></span><span class="line"><span class="cl">mv openssl-OpenSSL_1_0_1t openssl
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> openssl
+</span></span><span class="line"><span class="cl">./config --prefix<span class="o">=</span>/home/nana/miwifi/openssl no-asm no-shared  os/compiler:arm-xiaomi-linux-uclibcgnueabi-gcc
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>4.3 编译pcre</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /home/nana/miwifi
+</span></span><span class="line"><span class="cl">mkdir pcre
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> repo
+</span></span><span class="line"><span class="cl">wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.zip
+</span></span><span class="line"><span class="cl">unzip pcre-8.39.zip 
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> pcre-8.39
+</span></span><span class="line"><span class="cl">./configure --prefix<span class="o">=</span>/home/nana/miwifi/pcre  --enable-shared<span class="o">=</span>no  --host<span class="o">=</span>arm-xiaomi-linux-uclibcgnueabi
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="编译shadowsock-libev">编译shadowsock-libev</h2>
+<p>shadowsocks的项目地址:<a href="https://github.com/shadowsocks/shadowsocks-libev.git">https://github.com/shadowsocks/shadowsocks-libev.git</a>。
+这里的编译配置里，需要特别说明一下最后一个&ndash;disable-ssp，首先啥是ssp呢，英文是stack smash protector，中文直译是堆栈溢出保护，是gcc编译器针对堆栈溢出攻击的一种保护技术，在4.1版就已经实现了。小米工具链这个gcc是4.8，按理说应该是支持的，可是并没有，-v查看时，可以看到构建时被禁用了，对就是&ndash;disable-ssp这个标志。而shadowsocks最近的版本中加入了ssp的支持，SO老子就被这玩意坑了好久。。。好在，shadowsocks的ssp支持是可选的，可以通过&ndash;disable-ssp禁用，哎呀妈呀，这下可以编译了，舒坦！！！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /home/nana/miwifi
+</span></span><span class="line"><span class="cl">mkdir ss
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> repo
+</span></span><span class="line"><span class="cl">git clone https://github.com/shadowsocks/shadowsocks-libev.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> shadowsocks-libev
+</span></span><span class="line"><span class="cl">./configure --prefix<span class="o">=</span>/home/nana/miwifi/ss --with-openssl<span class="o">=</span>/home/nana/miwifi/openssl --with-zlib<span class="o">=</span>/home/nana/miwifi/zlib --with-pcre<span class="o">=</span>/home/nana/miwifi/pcre --host<span class="o">=</span>arm-xiaomi-linux-uclibcgnueabi --disable-ssp
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后，就可以愉快的等待编译结束，编译成功以后，就可以在之前指定的miwifi/ss/bin目录里找到我们要的ss-local,ss-redir,ss-tunnel等程序了。</p>
+<p>同样的方法可以编译小米路由器2用的chinadns,redsock2等程序，这里不一一列举了。</p>
+<p>至于这些东东怎么用，就是另外一个故事了，下次再说。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Polars</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2016-04-16
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/">路由器</a>
+          <a href="/tags/shadowsocks/">shadowsocks</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2016-10-08-nginx-letsencrypt/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">通过let&#39;s encrypt配置网站https</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2016-01-27.rust-study1/">
+            <span class="next-text nav-default">rust练习之高阶过程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

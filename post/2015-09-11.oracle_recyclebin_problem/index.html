@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Oracle recyclebin引起library cache lock事件 - 人心如花木，皆向阳而生</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Polars" /><meta name="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins" /><meta name="keywords" content="技术, 大数据, rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.imhu.xyz/post/2015-09-11.oracle_recyclebin_problem/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Oracle recyclebin引起library cache lock事件" />
+<meta property="og:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.imhu.xyz/post/2015-09-11.oracle_recyclebin_problem/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2015-09-11T08:58:02+00:00" />
+<meta property="article:modified_time" content="2015-09-11T08:58:02+00:00" />
+
+<meta itemprop="name" content="Oracle recyclebin引起library cache lock事件">
+<meta itemprop="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins"><meta itemprop="datePublished" content="2015-09-11T08:58:02+00:00" />
+<meta itemprop="dateModified" content="2015-09-11T08:58:02+00:00" />
+<meta itemprop="wordCount" content="1370">
+<meta itemprop="keywords" content="oralce," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Oracle recyclebin引起library cache lock事件"/>
+<meta name="twitter:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Polars</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Polars</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Oracle recyclebin引起library cache lock事件</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-09-11 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 1370 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents"></nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">insert</span><span class="w"> </span><span class="k">into</span><span class="w"> </span><span class="n">cux_loan_transactions</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="k">select</span><span class="w"> </span><span class="cm">/*parallel(8,t)*/</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">cux_loan_transaction_temp</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>鉴于这个语句没有任何特殊之处，所以运行的慢就显得非常奇怪，于是决定从数据库层面着手，先运行了最近的一个awr报告，果然在awr报告上，有一些奇怪的事件，不太正常，如下图可以看到，library cache lock和row cache lock事件有较多等待
+<img src="2015-09-11.oracle_recyclebin_problem/top_event.png" alt="top 5事件"></p>
+<!-- more -->
+<p>这个library cache lock事件简单来说：</p>
+<blockquote>
+<p>Oracle利用Library cache lock和Library cache pin来实现并发控制，Library cache lock是在handle上获取的，而Library cache pin则是在data heap上获取。访问对象时，首先必须获取handle上的lock，简而言之，就是个对象锁</p>
+</blockquote>
+<p>这个对象锁是系统的机制，很正常，可是为什么会有茫茫多的等待，锁等待说明有对象访问冲突，需要排队，但是前面说了，只是一个再简单不过的insert 语句，哪来的锁冲突。显然，有别的鬼!来看一下top sql</p>
+<p><img src="2015-09-11.oracle_recyclebin_problem/top_sql.png" alt="top sql"></p>
+<p>注意标红的部分，居然是delete recyclebin$，在清理回收站！可以确定，这个是系统自动触发的回收站清理，去看了下数据表空间的使用率为77%，也佐证了这个结论。可是回收站清理，为什么会导致系统这么缓慢？</p>
+<p>确定了问题sql以后，我又去看了下运行缓慢的会话正在执行的sql部分，然后发现：
+<img src="2015-09-11.oracle_recyclebin_problem/session_cursor.png" alt="session cursor"></p>
+<p>真的在这个会话里面，存在清理recyclebin的语句。。。，另外查看了这个会话的对象锁，问题终于确定了，这个会话的确会触发recyclebin$的行锁，由于一开始的insert 语句是并发执行的，实际上每个insert语句会启动8个会话，而如果每个会话里面都会有清理 recyclebin的语句在执行，并且是针对同一对象的，那么的确会引起行锁冲突，从而导致实际上并行的8个会话互斥，需要排队执行，而清理recyclebin这个操作，实际上是很慢的，从而引起了很多的Library cache lock的事件等待。</p>
+<p>事情到这里，基本上就清楚了，但是为什么oracle会在会话里带出来清理回收站的语句？为什么清理回收站的语句在并发执行的时候又会出现行锁冲突？目前并没有找到更确切的解释。我根据发生的现象判断，oracle 自动清理回收站的动作，应该在session级别的触发器里启动的，因此会和正常的会话一起执行，由于insert语句使用了并发执行，所以这个启动动作等于同时并行执行了，在起始参数一致的情况下，就不难想象，会发生行锁冲突了。</p>
+<p>导致自动清理recyclebin这个事件发生的原因，一个是表空间使用率比较高，一个是回收站里面对象也比较多，有50多万对象，而且因为业务需要，每天都会有比较多的接口表被drop掉，回收站空间也比较大。在需要写入大量数据的时候，oracle为了释放空间，就开始自动清理回收站了。</p>
+<p>找到了问题，就比较好解决了，实际上，在手工清理了回收站以后，系统运行速度立马就恢复了正常。 清理语句如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">purge</span><span class="w"> </span><span class="n">recyclebin</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过这个事件，我们需要注意几个事情：</p>
+<ol>
+<li>recyclebin是需要定期清理的，否则不知道什么时候就会出现这样的问题，坑你一下</li>
+<li>recyclebin的自动清理机制在会话出现并发执行的情况下，是有问题的</li>
+<li>recyclebin不怎么用的话，还是关了吧，太坑爹了</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Polars</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2015-09-11
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/oralce/">oralce</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2015-10-20.mac-os-ebs/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">mac os 登录ebs r12</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2015-09-02.oracle-unwrap/">
+            <span class="next-text nav-default">Oracle 加密package解密(unwrap)</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

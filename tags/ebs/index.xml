@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ebs on 人心如花木，皆向阳而生</title>
+    <link>https://blog.imhu.xyz/tags/ebs/</link>
+    <description>Recent content in ebs on 人心如花木，皆向阳而生</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 Oct 2015 08:58:02 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/ebs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mac os 登录ebs r12</title>
+      <link>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</link>
+      <pubDate>Tue, 20 Oct 2015 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</guid>
+      <description>目前oracle ebs 的常用版本都已经认证了java 8,以及mac os。但是由于服务器端需要应用patch才能正常支持java 7,8。所以在服务</description>
+    </item>
+    
+    <item>
+      <title>ebs 使用jre 7 登录问题</title>
+      <link>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</link>
+      <pubDate>Thu, 11 Sep 2014 15:27:38 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</guid>
+      <description>JRE 7登录EBS时，如果服务器端的jre未升级至jre 7，会提示如下错误 FRM-92095: Oracle JInitiator version too low. Please install version 1.1.8.2 or higher 这种情况下有三个办法： 1.windows 7的情况下，添加一个系</description>
+    </item>
+    
+    <item>
+      <title>64位windows中安装BIPublisherDesktop</title>
+      <link>https://blog.imhu.xyz/post/2013-08-05-oracle-bi-publisher-2013/</link>
+      <pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2013-08-05-oracle-bi-publisher-2013/</guid>
+      <description>1.JRE问题 在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装</description>
+    </item>
+    
+  </channel>
+</rss>

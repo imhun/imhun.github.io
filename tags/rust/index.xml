@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust on 人心如花木，皆向阳而生</title>
+    <link>https://blog.imhu.xyz/tags/rust/</link>
+    <description>Recent content in rust on 人心如花木，皆向阳而生</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 27 Jan 2016 08:58:02 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust练习之高阶过程</title>
+      <link>https://blog.imhu.xyz/post/2016-01-27.rust-study1/</link>
+      <pubDate>Wed, 27 Jan 2016 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2016-01-27.rust-study1/</guid>
+      <description>在学习rust的过程中，了解了高阶函数的知识，说白了就是函数可以作为参数，也可以返回一个函数，正好最近看到了scip公开课里面讲高阶过程这一</description>
+    </item>
+    
+    <item>
+      <title>rust常用类型转换</title>
+      <link>https://blog.imhu.xyz/post/2015-12-30.rust-type-cast/</link>
+      <pubDate>Wed, 30 Dec 2015 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2015-12-30.rust-type-cast/</guid>
+      <description>常用原生类型转换，Vec类型转换 x类型\至类型 i32 u32 f64 String i32 n/a x as u32 x as f64 x.to_string() u32 x as u32 n/a x as f64 x.to_string() f64 x as i32 x as u32 n/a x.to_string() String* x.parse().unwrap() x.parse().unwrap() x.parse().unwrap() n/a *可以看到i32, u32, f64</description>
+    </item>
+    
+  </channel>
+</rss>

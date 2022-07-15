@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IBM on 人心如花木，皆向阳而生</title>
+    <link>https://blog.imhu.xyz/tags/ibm/</link>
+    <description>Recent content in IBM on 人心如花木，皆向阳而生</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 23 Oct 2013 08:58:02 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/ibm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用jtopen对EBCDIC码与GBK之间进行互相转换</title>
+      <link>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</link>
+      <pubDate>Wed, 23 Oct 2013 08:58:02 +0000</pubDate>
+      
+      <guid>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</guid>
+      <description>AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用jtopen对EBCDIC码与GBK之间进行互相转换 - 人心如花木，皆向阳而生</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Polars" /><meta name="description" content="AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进" /><meta name="keywords" content="技术, 大数据, rust" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.101.0 with theme even" />
+
+
+<link rel="canonical" href="https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="使用jtopen对EBCDIC码与GBK之间进行互相转换" />
+<meta property="og:description" content="AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-10-23T08:58:02+00:00" />
+<meta property="article:modified_time" content="2013-10-23T08:58:02+00:00" />
+
+<meta itemprop="name" content="使用jtopen对EBCDIC码与GBK之间进行互相转换">
+<meta itemprop="description" content="AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进"><meta itemprop="datePublished" content="2013-10-23T08:58:02+00:00" />
+<meta itemprop="dateModified" content="2013-10-23T08:58:02+00:00" />
+<meta itemprop="wordCount" content="736">
+<meta itemprop="keywords" content="java,AS/400,IBM," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用jtopen对EBCDIC码与GBK之间进行互相转换"/>
+<meta name="twitter:description" content="AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Polars</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Polars</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用jtopen对EBCDIC码与GBK之间进行互相转换</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2013-10-23 </span>
+        <div class="post-category">
+            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
+            </div>
+          <span class="more-meta"> 约 736 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#jtopen-类库">jtopen 类库</a></li>
+            <li><a href="#gbk转ebcdic码">GBK转EBCDIC码：</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进行中文数据传输的时候，会遇到EBCDIC和GBK的相互转换。有两种方法，一种是手工构造码表进行转换，一种是使用jtopen, IBM Toolbox for Java的开源版本进行转换，本文介绍第二种方法。</p>
+<!-- more -->
+<h3 id="jtopen-类库">jtopen 类库</h3>
+<p>jtopen的官方网站：<a href="http://jt400.sourceforge.net/">http://jt400.sourceforge.net/</a>，jtopen提供了一个java工具类库，使用该类库可以方便的对IBM I ( i5/OS or OS/400)系列服务器进行访问或者提供数据操作。</p>
+<p>转换EBCDIC码与GBK使用jtopen的类，对应jt400.jar</p>
+<p>import com.ibm.as400.access.AS400Text;</p>
+<p>EBCDIC码各语言的码表网址：</p>
+<blockquote>
+<p><a href="http://publib.boulder.ibm.com/infocenter/iadthelp/v7r0/index.jsp?topic=/com.ibm.etools.iseries.toolbox.doc/ccsidlist.htm">http://publib.boulder.ibm.com/infocenter/iadthelp/v7r0/index.jsp?topic=/com.ibm.etools.iseries.toolbox.doc/ccsidlist.htm</a></p>
+</blockquote>
+<p>其中中文变长字节Mixed-byte EBCDIC为1388，双字节Double-byte EBCDIC为4933，对应GBK字符集</p>
+<p>EBCDIC码是一种字节码，因此保存形式为字节数组，这点请注意。</p>
+<p>以下简单举例EBCDIC与GBK之间互转的方法：</p>
+<h4 id="ebcdic转gbk">EBCDIC转GBK</h4>
+<p>假设读取AS/400输入的EBCDIC字节码数组为message</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">      <span class="kt">byte</span><span class="o">[]</span> <span class="n">message</span> <span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="kt">int</span> <span class="n">codePage</span><span class="o">=</span><span class="n">1388</span><span class="o">;</span><span class="c1">//中文码表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="c1">//声明转换类，其中codePage为需要转换至的码表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="n">AS400Text</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AS400Text</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">length</span><span class="o">,</span><span class="n">codePage</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c1">//resultedText即为转换后的GBK字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">      <span class="n">String</span> <span class="n">resultedText</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="n">converter</span><span class="o">.</span><span class="na">toObject</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;resultedText=&#34;</span> <span class="o">+</span> <span class="n">resultedText</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="gbk转ebcdic码">GBK转EBCDIC码：</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">strGbk</span><span class="o">=</span><span class="s">&#34;这是中文1213测试！&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//这里字节数组的长度要大等于转换结果的EBCDIC码的字节数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="kt">byte</span><span class="o">[]</span>  <span class="n">bytesData</span> <span class="o">=</span><span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">1500</span><span class="o">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">codePage</span><span class="o">=</span><span class="n">1388</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">AS400Text</span> <span class="n">converter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AS400Text</span><span class="o">(</span><span class="n">bytesData</span><span class="o">.</span><span class="na">length</span><span class="o">,</span><span class="n">codePage</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//bytesData即为转换为EBCDIC码的字节数组，可以直接发送给AS/400
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="n">bytesData</span> <span class="o">=</span><span class="n">converter</span><span class="o">.</span><span class="na">toBytes</span><span class="o">(</span><span class="n">strGbk</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以上备忘，仅供参考！</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Polars</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2013-10-23
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java/">java</a>
+          <a href="/tags/as/400/">AS/400</a>
+          <a href="/tags/ibm/">IBM</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2014-07-18.mac_os_ntfs/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">mac os 直接以读写方式挂载ntfs分区</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/2013-08-05-oracle-bi-publisher-2013/">
+            <span class="next-text nav-default">64位windows中安装BIPublisherDesktop</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
+  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
