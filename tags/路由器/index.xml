@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>路由器 on 人心如花木，皆向阳而生</title>
-    <link>https://blog.imhu.xyz/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</link>
+    <link>https://imhun.com/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</link>
     <description>Recent content in 路由器 on 人心如花木，皆向阳而生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 16 Apr 2016 14:04:14 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Apr 2016 14:04:14 +0000</lastBuildDate><atom:link href="https://imhun.com/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>小米路由器2(R2D) 编译shadowsocks-libev 最新版</title>
-      <link>https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/</link>
+      <link>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</link>
       <pubDate>Sat, 16 Apr 2016 14:04:14 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/</guid>
+      <guid>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</guid>
       <description>最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是</description>
     </item>
     

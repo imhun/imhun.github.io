@@ -1,232 +1,232 @@
-<?xml-stylesheet type="text/xsl" href="https://blog.imhu.xyz/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://imhun.com/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.imhu.xyz/about/</loc>
-    <lastmod>2017-08-28T21:41:52+08:00</lastmod>
+    <loc>https://imhun.com/about/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/categories/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/categories/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/hexo/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/tags/hexo/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2016-10-17.hexo-blog-config-1-md/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/post/2016-10-17.hexo-blog-config-1-md/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/post/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/tags/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/vps/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/tags/vps/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/categories/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/categories/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/</loc>
-    <lastmod>2016-10-17T16:04:39+00:00</lastmod>
+    <loc>https://imhun.com/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/nginx/</loc>
-    <lastmod>2016-10-08T19:33:34+00:00</lastmod>
+    <loc>https://imhun.com/tags/nginx/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/ssl/</loc>
-    <lastmod>2016-10-08T19:33:34+00:00</lastmod>
+    <loc>https://imhun.com/tags/ssl/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2016-10-08-nginx-letsencrypt/</loc>
-    <lastmod>2016-10-08T19:33:34+00:00</lastmod>
+    <loc>https://imhun.com/post/2016-10-08-nginx-letsencrypt/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/shadowsocks/</loc>
-    <lastmod>2016-04-16T14:04:14+00:00</lastmod>
+    <loc>https://imhun.com/tags/shadowsocks/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</loc>
-    <lastmod>2016-04-16T14:04:14+00:00</lastmod>
+    <loc>https://imhun.com/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/</loc>
-    <lastmod>2016-04-16T14:04:14+00:00</lastmod>
+    <loc>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/rust/</loc>
-    <lastmod>2016-01-27T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/rust/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2016-01-27.rust-study1/</loc>
-    <lastmod>2016-01-27T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2016-01-27.rust-study1/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2015-12-30.rust-type-cast/</loc>
-    <lastmod>2015-12-30T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2015-12-30.rust-type-cast/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/ebs/</loc>
-    <lastmod>2015-10-20T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/ebs/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/mac/</loc>
-    <lastmod>2015-10-20T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/mac/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</loc>
-    <lastmod>2015-10-20T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2015-10-20.mac-os-ebs/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2015-09-11.oracle_recyclebin_problem/</loc>
-    <lastmod>2015-09-11T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/oralce/</loc>
-    <lastmod>2015-09-11T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/oralce/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2015-09-02.oracle-unwrap/</loc>
-    <lastmod>2015-09-02T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2015-09-02.oracle-unwrap/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/java/</loc>
-    <lastmod>2015-08-14T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/java/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2015-08-14.java_substring/</loc>
-    <lastmod>2015-08-14T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2015-08-14.java_substring/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</loc>
-    <lastmod>2014-09-11T15:27:38+00:00</lastmod>
+    <loc>https://imhun.com/post/2014-09-11.ebs_java_7/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/</loc>
-    <lastmod>2014-07-18T15:27:38+00:00</lastmod>
+    <loc>https://imhun.com/post/2014-07-18.mac_os_ntfs/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/ibm/</loc>
-    <lastmod>2013-10-23T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/tags/ibm/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</loc>
-    <lastmod>2013-10-23T08:58:02+00:00</lastmod>
+    <loc>https://imhun.com/post/2013-10-28.ebcdic_to_gbk/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/post/2013-08-05-oracle-bi-publisher-2013/</loc>
-    <lastmod>2013-08-05T15:41:32+00:00</lastmod>
+    <loc>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/bi-publisher/</loc>
-    <lastmod>2013-08-05T15:41:32+00:00</lastmod>
+    <loc>https://imhun.com/tags/bi-publisher/</loc>
+    <lastmod>2022-07-15T21:54:38+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://blog.imhu.xyz/tags/as/400/</loc>
+    <loc>https://imhun.com/tags/as/400/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

@@ -2,125 +2,125 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 人心如花木，皆向阳而生</title>
-    <link>https://blog.imhu.xyz/post/</link>
+    <link>https://imhun.com/post/</link>
     <description>Recent content in Posts on 人心如花木，皆向阳而生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 17 Oct 2016 16:04:39 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Oct 2016 16:04:39 +0000</lastBuildDate><atom:link href="https://imhun.com/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>hexo在vps上搭建blog</title>
-      <link>https://blog.imhu.xyz/post/2016-10-17.hexo-blog-config-1-md/</link>
+      <link>https://imhun.com/post/2016-10-17.hexo-blog-config-1-md/</link>
       <pubDate>Mon, 17 Oct 2016 16:04:39 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2016-10-17.hexo-blog-config-1-md/</guid>
+      <guid>https://imhun.com/post/2016-10-17.hexo-blog-config-1-md/</guid>
       <description>hexo安装 本机以mac为例 安装程序 推荐使用brew包管理器安装，如果没有brew，首先安装brew 1 /usr/bin/ruby -e &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;#34; 安装node.js 1 brew install node 安</description>
     </item>
     
     <item>
       <title>通过let&#39;s encrypt配置网站https</title>
-      <link>https://blog.imhu.xyz/post/2016-10-08-nginx-letsencrypt/</link>
+      <link>https://imhun.com/post/2016-10-08-nginx-letsencrypt/</link>
       <pubDate>Sat, 08 Oct 2016 19:33:34 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2016-10-08-nginx-letsencrypt/</guid>
+      <guid>https://imhun.com/post/2016-10-08-nginx-letsencrypt/</guid>
       <description>网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&amp;rsquo;s encrypt</description>
     </item>
     
     <item>
       <title>小米路由器2(R2D) 编译shadowsocks-libev 最新版</title>
-      <link>https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/</link>
+      <link>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</link>
       <pubDate>Sat, 16 Apr 2016 14:04:14 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2016-04-16.xiaomi_r2d_ssr/</guid>
+      <guid>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</guid>
       <description>最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是</description>
     </item>
     
     <item>
       <title>rust练习之高阶过程</title>
-      <link>https://blog.imhu.xyz/post/2016-01-27.rust-study1/</link>
+      <link>https://imhun.com/post/2016-01-27.rust-study1/</link>
       <pubDate>Wed, 27 Jan 2016 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2016-01-27.rust-study1/</guid>
+      <guid>https://imhun.com/post/2016-01-27.rust-study1/</guid>
       <description>在学习rust的过程中，了解了高阶函数的知识，说白了就是函数可以作为参数，也可以返回一个函数，正好最近看到了scip公开课里面讲高阶过程这一</description>
     </item>
     
     <item>
       <title>rust常用类型转换</title>
-      <link>https://blog.imhu.xyz/post/2015-12-30.rust-type-cast/</link>
+      <link>https://imhun.com/post/2015-12-30.rust-type-cast/</link>
       <pubDate>Wed, 30 Dec 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-12-30.rust-type-cast/</guid>
+      <guid>https://imhun.com/post/2015-12-30.rust-type-cast/</guid>
       <description>常用原生类型转换，Vec类型转换 x类型\至类型 i32 u32 f64 String i32 n/a x as u32 x as f64 x.to_string() u32 x as u32 n/a x as f64 x.to_string() f64 x as i32 x as u32 n/a x.to_string() String* x.parse().unwrap() x.parse().unwrap() x.parse().unwrap() n/a *可以看到i32, u32, f64</description>
     </item>
     
     <item>
       <title>mac os 登录ebs r12</title>
-      <link>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</link>
+      <link>https://imhun.com/post/2015-10-20.mac-os-ebs/</link>
       <pubDate>Tue, 20 Oct 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</guid>
+      <guid>https://imhun.com/post/2015-10-20.mac-os-ebs/</guid>
       <description>目前oracle ebs 的常用版本都已经认证了java 8,以及mac os。但是由于服务器端需要应用patch才能正常支持java 7,8。所以在服务</description>
     </item>
     
     <item>
       <title>Oracle recyclebin引起library cache lock事件</title>
-      <link>https://blog.imhu.xyz/post/2015-09-11.oracle_recyclebin_problem/</link>
+      <link>https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/</link>
       <pubDate>Fri, 11 Sep 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-09-11.oracle_recyclebin_problem/</guid>
+      <guid>https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/</guid>
       <description>目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins</description>
     </item>
     
     <item>
       <title>Oracle 加密package解密(unwrap)</title>
-      <link>https://blog.imhu.xyz/post/2015-09-02.oracle-unwrap/</link>
+      <link>https://imhun.com/post/2015-09-02.oracle-unwrap/</link>
       <pubDate>Wed, 02 Sep 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-09-02.oracle-unwrap/</guid>
+      <guid>https://imhun.com/post/2015-09-02.oracle-unwrap/</guid>
       <description>最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找</description>
     </item>
     
     <item>
       <title>java多字节字符串按字节截取</title>
-      <link>https://blog.imhu.xyz/post/2015-08-14.java_substring/</link>
+      <link>https://imhun.com/post/2015-08-14.java_substring/</link>
       <pubDate>Fri, 14 Aug 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-08-14.java_substring/</guid>
+      <guid>https://imhun.com/post/2015-08-14.java_substring/</guid>
       <description>java多字节字符串截取，如果按照通常的按字节长度截取，有可能从字符内部截断，导致结果字符串最后出现乱码，因此需要做一下特别处理。 算法思路 1</description>
     </item>
     
     <item>
       <title>ebs 使用jre 7 登录问题</title>
-      <link>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</link>
+      <link>https://imhun.com/post/2014-09-11.ebs_java_7/</link>
       <pubDate>Thu, 11 Sep 2014 15:27:38 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2014-09-11.ebs_java_7/</guid>
+      <guid>https://imhun.com/post/2014-09-11.ebs_java_7/</guid>
       <description>JRE 7登录EBS时，如果服务器端的jre未升级至jre 7，会提示如下错误 FRM-92095: Oracle JInitiator version too low. Please install version 1.1.8.2 or higher 这种情况下有三个办法： 1.windows 7的情况下，添加一个系</description>
     </item>
     
     <item>
       <title>mac os 直接以读写方式挂载ntfs分区</title>
-      <link>https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/</link>
+      <link>https://imhun.com/post/2014-07-18.mac_os_ntfs/</link>
       <pubDate>Fri, 18 Jul 2014 15:27:38 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/</guid>
+      <guid>https://imhun.com/post/2014-07-18.mac_os_ntfs/</guid>
       <description>mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过</description>
     </item>
     
     <item>
       <title>使用jtopen对EBCDIC码与GBK之间进行互相转换</title>
-      <link>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</link>
+      <link>https://imhun.com/post/2013-10-28.ebcdic_to_gbk/</link>
       <pubDate>Wed, 23 Oct 2013 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2013-10-28.ebcdic_to_gbk/</guid>
+      <guid>https://imhun.com/post/2013-10-28.ebcdic_to_gbk/</guid>
       <description>AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进</description>
     </item>
     
     <item>
       <title>64位windows中安装BIPublisherDesktop</title>
-      <link>https://blog.imhu.xyz/post/2013-08-05-oracle-bi-publisher-2013/</link>
+      <link>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</link>
       <pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2013-08-05-oracle-bi-publisher-2013/</guid>
+      <guid>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</guid>
       <description>1.JRE问题 在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装</description>
     </item>
     

@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://blog.imhu.xyz/sitemap.xml
+Sitemap: https://imhun.com/sitemap.xml

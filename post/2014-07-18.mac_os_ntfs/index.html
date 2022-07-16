@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Polars" /><meta name="description" content="mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过" /><meta name="keywords" content="技术, 大数据, rust" />
+<meta name="author" content="Imhun" /><meta name="description" content="mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过" /><meta name="keywords" content="技术, 大数据, rust" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.101.0 with theme even" />
 
 
-<link rel="canonical" href="https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/" />
+<link rel="canonical" href="https://imhun.com/post/2014-07-18.mac_os_ntfs/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -42,13 +42,13 @@
 <meta property="og:title" content="mac os 直接以读写方式挂载ntfs分区" />
 <meta property="og:description" content="mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://imhun.com/post/2014-07-18.mac_os_ntfs/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2014-07-18T15:27:38+00:00" />
-<meta property="article:modified_time" content="2014-07-18T15:27:38+00:00" />
+<meta property="article:modified_time" content="2022-07-15T21:54:38+08:00" />
 
 <meta itemprop="name" content="mac os 直接以读写方式挂载ntfs分区">
 <meta itemprop="description" content="mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过"><meta itemprop="datePublished" content="2014-07-18T15:27:38+00:00" />
-<meta itemprop="dateModified" content="2014-07-18T15:27:38+00:00" />
+<meta itemprop="dateModified" content="2022-07-15T21:54:38+08:00" />
 <meta itemprop="wordCount" content="522">
 <meta itemprop="keywords" content="mac," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="mac os 直接以读写方式挂载ntfs分区"/>
@@ -67,7 +67,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">Polars</a>
+    <a href="/" class="logo">Imhun</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -98,7 +98,7 @@
   <div class="container" id="mobile-panel">
     <header id="header" class="header">
         <div class="logo-wrapper">
-  <a href="/" class="logo">Polars</a>
+  <a href="/" class="logo">Imhun</a>
 </div>
 
 
@@ -200,13 +200,13 @@
     <div class="post-copyright">
   <p class="copyright-item">
     <span class="item-title">文章作者</span>
-    <span class="item-content">Polars</span>
+    <span class="item-content">Imhun</span>
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2014-07-18
-        
+        2022-07-15
+        <a href="https://github.com/imhun/imhun.github.io/commit/38a6c3ef38bf03992358b740edad92eefce12e48" title="init">(38a6c3e)</a>
     </span>
   </p>
   
@@ -236,15 +236,23 @@
   
 
   
+    <script src="https://utteranc.es/client.js"
+            repo="imhun/comment"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
 
       </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="social-links">
-      <a href="mailto:a@imhu.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="mailto:m@imhun.com" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/huwsun" class="iconfont icon-github" title="github"></a>
-  <a href="https://blog.imhu.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  <a href="https://imhun.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
 </div>
 
 <div class="copyright">
@@ -262,7 +270,7 @@
   <span class="copyright-year">
     &copy; 
     2013 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Polars</span>
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Imhun</span>
   </span>
 </div>
 
@@ -281,6 +289,17 @@
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-G4NWL3SM8P', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

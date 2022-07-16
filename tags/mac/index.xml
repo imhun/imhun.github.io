@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>mac on 人心如花木，皆向阳而生</title>
-    <link>https://blog.imhu.xyz/tags/mac/</link>
+    <link>https://imhun.com/tags/mac/</link>
     <description>Recent content in mac on 人心如花木，皆向阳而生</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 Oct 2015 08:58:02 +0000</lastBuildDate><atom:link href="https://blog.imhu.xyz/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Oct 2015 08:58:02 +0000</lastBuildDate><atom:link href="https://imhun.com/tags/mac/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>mac os 登录ebs r12</title>
-      <link>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</link>
+      <link>https://imhun.com/post/2015-10-20.mac-os-ebs/</link>
       <pubDate>Tue, 20 Oct 2015 08:58:02 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2015-10-20.mac-os-ebs/</guid>
+      <guid>https://imhun.com/post/2015-10-20.mac-os-ebs/</guid>
       <description>目前oracle ebs 的常用版本都已经认证了java 8,以及mac os。但是由于服务器端需要应用patch才能正常支持java 7,8。所以在服务</description>
     </item>
     
     <item>
       <title>mac os 直接以读写方式挂载ntfs分区</title>
-      <link>https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/</link>
+      <link>https://imhun.com/post/2014-07-18.mac_os_ntfs/</link>
       <pubDate>Fri, 18 Jul 2014 15:27:38 +0000</pubDate>
       
-      <guid>https://blog.imhu.xyz/post/2014-07-18.mac_os_ntfs/</guid>
+      <guid>https://imhun.com/post/2014-07-18.mac_os_ntfs/</guid>
       <description>mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过</description>
     </item>
     
