@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>日志 on 人心如花木，皆向阳而生</title>
+		<link>http://localhost:1313/tags/%E6%97%A5%E5%BF%97/</link>
+		<description>Recent content in 日志 on 人心如花木，皆向阳而生</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 18 Mar 2021 08:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/tags/%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Rancher-logging配置</title>
+				<link>http://localhost:1313/post/2021-03-18.rancher-logging/</link>
+				<pubDate>Thu, 18 Mar 2021 08:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/post/2021-03-18.rancher-logging/</guid>
+				<description>&lt;p&gt;Fluent Bit用于汇总日志。Fluentd用于过滤消息并将其路由到输出&lt;/p&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;p&gt;&lt;img src=&#34;2021-03-18.rancher-logging/rancher-logging-01.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;首先配置登录的用户密码，创建一个secrets&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;2021-03-18.rancher-logging/rancher-logging-02.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;配置cluster output&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;2021-03-18.rancher-logging/rancher-logging-03.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;需要在配置中手工加入ssl_ca_certs_from_system: true&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>阿里云日志收集</title>
+				<link>http://localhost:1313/post/2021-03-16.aliyun-log-collection/</link>
+				<pubDate>Tue, 16 Mar 2021 08:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/post/2021-03-16.aliyun-log-collection/</guid>
+				<description>&lt;p&gt;参考文档：https://help.aliyun.com/document_detail/112902.html?spm=a2c4g.11186623.6.783.6c7e44f0EK6PG5&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

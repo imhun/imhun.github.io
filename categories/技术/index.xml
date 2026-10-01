@@ -1,128 +1,108 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>技术 on 人心如花木，皆向阳而生</title>
-    <link>https://imhun.com/categories/%E6%8A%80%E6%9C%AF/</link>
-    <description>Recent content in 技术 on 人心如花木，皆向阳而生</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 17 Oct 2016 16:04:39 +0000</lastBuildDate><atom:link href="https://imhun.com/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>hexo在vps上搭建blog</title>
-      <link>https://imhun.com/post/2016-10-17.hexo-blog-config-1-md/</link>
-      <pubDate>Mon, 17 Oct 2016 16:04:39 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2016-10-17.hexo-blog-config-1-md/</guid>
-      <description>hexo安装 本机以mac为例 安装程序 推荐使用brew包管理器安装，如果没有brew，首先安装brew 1 /usr/bin/ruby -e &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;#34; 安装node.js 1 brew install node 安</description>
-    </item>
-    
-    <item>
-      <title>通过let&#39;s encrypt配置网站https</title>
-      <link>https://imhun.com/post/2016-10-08-nginx-letsencrypt/</link>
-      <pubDate>Sat, 08 Oct 2016 19:33:34 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2016-10-08-nginx-letsencrypt/</guid>
-      <description>网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&amp;rsquo;s encrypt</description>
-    </item>
-    
-    <item>
-      <title>小米路由器2(R2D) 编译shadowsocks-libev 最新版</title>
-      <link>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</link>
-      <pubDate>Sat, 16 Apr 2016 14:04:14 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2016-04-16.xiaomi_r2d_ssr/</guid>
-      <description>最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是</description>
-    </item>
-    
-    <item>
-      <title>rust练习之高阶过程</title>
-      <link>https://imhun.com/post/2016-01-27.rust-study1/</link>
-      <pubDate>Wed, 27 Jan 2016 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2016-01-27.rust-study1/</guid>
-      <description>在学习rust的过程中，了解了高阶函数的知识，说白了就是函数可以作为参数，也可以返回一个函数，正好最近看到了scip公开课里面讲高阶过程这一</description>
-    </item>
-    
-    <item>
-      <title>rust常用类型转换</title>
-      <link>https://imhun.com/post/2015-12-30.rust-type-cast/</link>
-      <pubDate>Wed, 30 Dec 2015 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2015-12-30.rust-type-cast/</guid>
-      <description>常用原生类型转换，Vec类型转换 x类型\至类型 i32 u32 f64 String i32 n/a x as u32 x as f64 x.to_string() u32 x as u32 n/a x as f64 x.to_string() f64 x as i32 x as u32 n/a x.to_string() String* x.parse().unwrap() x.parse().unwrap() x.parse().unwrap() n/a *可以看到i32, u32, f64</description>
-    </item>
-    
-    <item>
-      <title>mac os 登录ebs r12</title>
-      <link>https://imhun.com/post/2015-10-20.mac-os-ebs/</link>
-      <pubDate>Tue, 20 Oct 2015 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2015-10-20.mac-os-ebs/</guid>
-      <description>目前oracle ebs 的常用版本都已经认证了java 8,以及mac os。但是由于服务器端需要应用patch才能正常支持java 7,8。所以在服务</description>
-    </item>
-    
-    <item>
-      <title>Oracle recyclebin引起library cache lock事件</title>
-      <link>https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/</link>
-      <pubDate>Fri, 11 Sep 2015 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/</guid>
-      <description>目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins</description>
-    </item>
-    
-    <item>
-      <title>Oracle 加密package解密(unwrap)</title>
-      <link>https://imhun.com/post/2015-09-02.oracle-unwrap/</link>
-      <pubDate>Wed, 02 Sep 2015 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2015-09-02.oracle-unwrap/</guid>
-      <description>最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找</description>
-    </item>
-    
-    <item>
-      <title>java多字节字符串按字节截取</title>
-      <link>https://imhun.com/post/2015-08-14.java_substring/</link>
-      <pubDate>Fri, 14 Aug 2015 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2015-08-14.java_substring/</guid>
-      <description>java多字节字符串截取，如果按照通常的按字节长度截取，有可能从字符内部截断，导致结果字符串最后出现乱码，因此需要做一下特别处理。 算法思路 1</description>
-    </item>
-    
-    <item>
-      <title>ebs 使用jre 7 登录问题</title>
-      <link>https://imhun.com/post/2014-09-11.ebs_java_7/</link>
-      <pubDate>Thu, 11 Sep 2014 15:27:38 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2014-09-11.ebs_java_7/</guid>
-      <description>JRE 7登录EBS时，如果服务器端的jre未升级至jre 7，会提示如下错误 FRM-92095: Oracle JInitiator version too low. Please install version 1.1.8.2 or higher 这种情况下有三个办法： 1.windows 7的情况下，添加一个系</description>
-    </item>
-    
-    <item>
-      <title>mac os 直接以读写方式挂载ntfs分区</title>
-      <link>https://imhun.com/post/2014-07-18.mac_os_ntfs/</link>
-      <pubDate>Fri, 18 Jul 2014 15:27:38 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2014-07-18.mac_os_ntfs/</guid>
-      <description>mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过</description>
-    </item>
-    
-    <item>
-      <title>使用jtopen对EBCDIC码与GBK之间进行互相转换</title>
-      <link>https://imhun.com/post/2013-10-28.ebcdic_to_gbk/</link>
-      <pubDate>Wed, 23 Oct 2013 08:58:02 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2013-10-28.ebcdic_to_gbk/</guid>
-      <description>AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进</description>
-    </item>
-    
-    <item>
-      <title>64位windows中安装BIPublisherDesktop</title>
-      <link>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</link>
-      <pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</guid>
-      <description>1.JRE问题 在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>技术 on 人心如花木，皆向阳而生</title>
+		<link>http://localhost:1313/categories/%E6%8A%80%E6%9C%AF/</link>
+		<description>Recent content in 技术 on 人心如花木，皆向阳而生</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 15 Jul 2022 21:54:38 +0800</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/categories/%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>hexo在vps上搭建blog</title>
+				<link>http://localhost:1313/post/2016-10-17.hexo-blog-config-1-md/</link>
+				<pubDate>Mon, 17 Oct 2016 16:04:39 +0000</pubDate>
+				<guid>http://localhost:1313/post/2016-10-17.hexo-blog-config-1-md/</guid>
+				<description>&lt;h2 id=&#34;hexo安装&#34;&gt;hexo安装&lt;/h2&gt;&#xA;&lt;p&gt;本机以mac为例&lt;/p&gt;&#xA;&lt;h3 id=&#34;安装程序&#34;&gt;安装程序&lt;/h3&gt;&#xA;&lt;p&gt;推荐使用brew包管理器安装，如果没有brew，首先安装brew&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/usr/bin/ruby -e &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;安装node.js&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install node&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;安装git&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;h3 id=&#34;安装hexo并创建站点&#34;&gt;安装hexo，并创建站点&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;&#xA;&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9&#xA;&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10&#xA;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&#xA;&lt;td class=&#34;lntd&#34;&gt;&#xA;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm install -g hexo-cli&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# 创建本地目录&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ~/blog&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#初始化&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hexo init&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm install&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#生成静态文件&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hexo g&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#启动本地服务器&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hexo s&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&lt;p&gt;然后就可以通过 &lt;code&gt;http://localhost:4000 &lt;/code&gt; 来测试你的blog了。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>通过let&#39;s encrypt配置网站https</title>
+				<link>http://localhost:1313/post/2016-10-08-nginx-letsencrypt/</link>
+				<pubDate>Sat, 08 Oct 2016 19:33:34 +0000</pubDate>
+				<guid>http://localhost:1313/post/2016-10-08-nginx-letsencrypt/</guid>
+				<description>&lt;p&gt;网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：&lt;a href=&#34;https://letsencrypt.org&#34;&gt;let&amp;rsquo;s encrypt&lt;/a&gt;。免费，安装方便，配置简单，值得信赖。 &lt;br&gt;&#xA;let&amp;rsquo;s encrypt的证书现在支持自动颁发安装，客户端工具为certbot，官方网站：&lt;a href=&#34;https://certbot.eff.org/&#34;&gt;https://certbot.eff.org/&lt;/a&gt;，不同的操作系统，certbot程序名称不一样，我的服务器为ubuntu，对应的程序是:&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>小米路由器2(R2D) 编译shadowsocks-libev 最新版</title>
+				<link>http://localhost:1313/post/2016-04-16.xiaomi_r2d_ssr/</link>
+				<pubDate>Sat, 16 Apr 2016 14:04:14 +0000</pubDate>
+				<guid>http://localhost:1313/post/2016-04-16.xiaomi_r2d_ssr/</guid>
+				<description>&lt;p&gt;最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是很容易自己装插件上去的，结果弄了以后才知道。。。太幼稚！&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>rust练习之高阶过程</title>
+				<link>http://localhost:1313/post/2016-01-27.rust-study1/</link>
+				<pubDate>Wed, 27 Jan 2016 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2016-01-27.rust-study1/</guid>
+				<description>&lt;p&gt;在学习rust的过程中，了解了高阶函数的知识，说白了就是函数可以作为参数，也可以返回一个函数，正好最近看到了scip公开课里面讲高阶过程这一章，有个求平方根的过程，里面的lisp实现相当的简洁优美，基本是对数学公式的形式化书写。这里用rust实现一下，看看区别有多大。&#xA;主要实现了传入函数作为参数，并将函数作为返回值，并以函数式风格实现了平方根求值。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>rust常用类型转换</title>
+				<link>http://localhost:1313/post/2015-12-30.rust-type-cast/</link>
+				<pubDate>Wed, 30 Dec 2015 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2015-12-30.rust-type-cast/</guid>
+				<description>&lt;p&gt;常用原生类型转换，Vec类型转换&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;x类型\至类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;i32&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;u32&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;f64&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;String&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;i32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as u32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as f64&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_string()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;u32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as u32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as f64&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_string()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;f64&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as i32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x as u32&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_string()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;String*&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.parse().unwrap()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.parse().unwrap()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.parse().unwrap()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;*可以看到i32, u32,  f64 到String类型是同一个函数，这样的话，如何来确定要转换至的具体类型？就是类型推导！当然，如果rust无法通过上下文推导出类型，就需要给出提示，例如x.parse::&lt;i32&gt;().unwrap()。但是通常情况下，都不需要提示即可自动推导出类型。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h4 id=&#34;strstringcollectionsstringstring&#34;&gt;&amp;amp;str/String/collections::string::String&lt;/h4&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;x类型\至类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;String&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;&amp;amp;str&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;String&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;amp;*x&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;amp;str&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_string()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h4 id=&#34;vectboxt&#34;&gt;Vec&lt;T&gt;/&amp;amp;[T]/Box&amp;lt;[T]&amp;gt;&lt;/h4&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;x类型\至类型&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Vec&lt;T&gt;&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;&amp;amp;[T]&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Box&amp;lt;[T]&amp;gt;&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Vec&lt;T&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;amp;x[..]&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.into_boxed_slice()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;amp;[T]&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_vec()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Box::new(*x)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Box&amp;lt;[T]&amp;gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;x.to_vec()&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;amp;*x&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;n/a&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
+			</item>
+			<item>
+				<title>mac os 登录ebs r12</title>
+				<link>http://localhost:1313/post/2015-10-20.mac-os-ebs/</link>
+				<pubDate>Tue, 20 Oct 2015 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2015-10-20.mac-os-ebs/</guid>
+				<description>&lt;p&gt;目前oracle ebs 的常用版本都已经认证了java 8,以及mac os。但是由于服务器端需要应用patch才能正常支持java 7,8。所以在服务器端没有正常打patch的情况下，在mac os上登录ebs，会提示错误frm-92095，如下图：&#xA;&lt;img src=&#34;2015-10-20.mac-os-ebs/frm-92095.png&#34; alt=&#34;frm-92095&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Oracle recyclebin引起library cache lock事件</title>
+				<link>http://localhost:1313/post/2015-09-11.oracle_recyclebin_problem/</link>
+				<pubDate>Fri, 11 Sep 2015 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2015-09-11.oracle_recyclebin_problem/</guid>
+				<description>&lt;p&gt;目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Oracle 加密package解密(unwrap)</title>
+				<link>http://localhost:1313/post/2015-09-02.oracle-unwrap/</link>
+				<pubDate>Wed, 02 Sep 2015 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2015-09-02.oracle-unwrap/</guid>
+				<description>&lt;p&gt;最近碰到一个问题，需要解密几个使用oracle wrap加密过的程序包，查了下，已经有很多可用的程序，支持10g，11g，连12c都支持。查找过程中，花了点时间研究了下解密的过程，简单记录一下。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>java多字节字符串按字节截取</title>
+				<link>http://localhost:1313/post/2015-08-14.java_substring/</link>
+				<pubDate>Fri, 14 Aug 2015 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2015-08-14.java_substring/</guid>
+				<description>&lt;p&gt;java多字节字符串截取，如果按照通常的按字节长度截取，有可能从字符内部截断，导致结果字符串最后出现乱码，因此需要做一下特别处理。&lt;/p&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;h3 id=&#34;算法思路&#34;&gt;算法思路&lt;/h3&gt;&#xA;&lt;p&gt;1.先按照实际要截取的字节长度，复制一份字节数组&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>ebs 使用jre 7 登录问题</title>
+				<link>http://localhost:1313/post/2014-09-11.ebs_java_7/</link>
+				<pubDate>Thu, 11 Sep 2014 15:27:38 +0000</pubDate>
+				<guid>http://localhost:1313/post/2014-09-11.ebs_java_7/</guid>
+				<description>&lt;p&gt;JRE 7登录EBS时，如果服务器端的jre未升级至jre 7，会提示如下错误&#xA;FRM-92095: Oracle JInitiator version too low. Please install version 1.1.8.2 or higher&#xA;这种情况下有三个办法：&#xA;1.windows 7的情况下，添加一个系统变量&#xA;JAVA_TOOL_OPTIONS，值为：-Djava.vendor=&amp;ldquo;Sun Microsystems Inc.&amp;rdquo;&#xA;（不确定xp是否支持）&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>mac os 直接以读写方式挂载ntfs分区</title>
+				<link>http://localhost:1313/post/2014-07-18.mac_os_ntfs/</link>
+				<pubDate>Fri, 18 Jul 2014 15:27:38 +0000</pubDate>
+				<guid>http://localhost:1313/post/2014-07-18.mac_os_ntfs/</guid>
+				<description>&lt;p&gt;mac os内建了对ntfs分区的支持，但是出于众所周知的原因，默认没有提供以读写方式挂载的选项，只好通过修改系统设置的方式来达到目的，原理是通过编辑/etc/fstab添加分区标识，强制让系统以读写方式挂载指定的ntfs分区&#xA;首先，需要确认要挂载的ntfs分区的UUID，又叫通用唯一标识，用来标识分区，通过打开 磁盘工具，选中分区，点击信息，打开下图，即可确定&#xA;&lt;img src=&#34;2014-07-18.mac_os_ntfs/disk.png&#34; alt=&#34;disk&#34;&gt;&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>使用jtopen对EBCDIC码与GBK之间进行互相转换</title>
+				<link>http://localhost:1313/post/2013-10-28.ebcdic_to_gbk/</link>
+				<pubDate>Wed, 23 Oct 2013 08:58:02 +0000</pubDate>
+				<guid>http://localhost:1313/post/2013-10-28.ebcdic_to_gbk/</guid>
+				<description>&lt;p&gt;AS/400采用EBCDIC编码保存在QSYS.LIB中的所有中文字符，而在pc端winows 95,windows NT采用GBK内码保 存中文字符，两者之间在进行中文数据传输的时候，会遇到EBCDIC和GBK的相互转换。有两种方法，一种是手工构造码表进行转换，一种是使用jtopen, IBM Toolbox for Java的开源版本进行转换，本文介绍第二种方法。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>64位windows中安装BIPublisherDesktop</title>
+				<link>http://localhost:1313/post/2013-08-05-oracle-bi-publisher-2013/</link>
+				<pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
+				<guid>http://localhost:1313/post/2013-08-05-oracle-bi-publisher-2013/</guid>
+				<description>&lt;ul&gt;&#xA;&lt;li&gt;1.JRE问题&#xA;在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装过了jre了，也提示同样的错。&#xA;解决办法:安装x64的jre，至于原因，问候oralce去吧&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;2.安装BIPublisherDesktop32完成后，在word 2013里找不到BI Publisher的菜单项，嗯嗯，又到了问候oracle全家的时候了&#xA;解决办法:在BI Publisher 的安装目录下，比如本机是C:\Program Files (x86)\Oracle\BIPublisher\BI Publisher Desktop\DotNetInstallFiles，运行里面的TBMenusSetup2007，目前BI Publisher Desktop不支持x64版的office2013，虽然oracle 提供了一个BIPublisherDesktop64安装包，所以骚年，要用BIPublisherDesktop，安装32位office2013吧&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+	</channel>
 </rss>

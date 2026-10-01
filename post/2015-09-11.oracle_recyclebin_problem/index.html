@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Oracle recyclebin引起library cache lock事件 - 人心如花木，皆向阳而生</title>
@@ -16,17 +16,18 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Imhun" /><meta name="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins" /><meta name="keywords" content="技术, 大数据, rust" />
+<meta name="author" content="" /><meta name="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：
+" /><meta name="keywords" content="技术, 大数据, rust" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.101.0 with theme even" />
+<meta name="generator" content="Hugo 0.167.0 with theme even" />
 
 
-<link rel="canonical" href="https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/" />
+<link rel="canonical" href="http://localhost:1313/post/2015-09-11.oracle_recyclebin_problem/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -39,20 +40,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Oracle recyclebin引起library cache lock事件" />
-<meta property="og:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://imhun.com/post/2015-09-11.oracle_recyclebin_problem/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2015-09-11T08:58:02+00:00" />
-<meta property="article:modified_time" content="2022-07-15T21:54:38+08:00" />
+<meta property="og:url" content="http://localhost:1313/post/2015-09-11.oracle_recyclebin_problem/">
+	<meta property="og:site_name" content="人心如花木，皆向阳而生">
+	<meta property="og:title" content="Oracle recyclebin引起library cache lock事件">
+	<meta property="og:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：">
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="post">
+		<meta property="article:published_time" content="2015-09-11T08:58:02+00:00">
+		<meta property="article:modified_time" content="2022-07-15T21:54:38+08:00">
+		<meta property="article:tag" content="Oralce">
 
-<meta itemprop="name" content="Oracle recyclebin引起library cache lock事件">
-<meta itemprop="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins"><meta itemprop="datePublished" content="2015-09-11T08:58:02+00:00" />
-<meta itemprop="dateModified" content="2022-07-15T21:54:38+08:00" />
-<meta itemprop="wordCount" content="1370">
-<meta itemprop="keywords" content="oralce," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Oracle recyclebin引起library cache lock事件"/>
-<meta name="twitter:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个ins"/>
+	<meta itemprop="name" content="Oracle recyclebin引起library cache lock事件">
+	<meta itemprop="description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：">
+	<meta itemprop="datePublished" content="2015-09-11T08:58:02+00:00">
+	<meta itemprop="dateModified" content="2022-07-15T21:54:38+08:00">
+	<meta itemprop="wordCount" content="1370">
+	<meta itemprop="keywords" content="Oralce">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Oracle recyclebin引起library cache lock事件">
+	<meta name="twitter:description" content="目前在客户这里遇到一个问题，生产环境的Oracle数据库批处理突然运行非常缓慢，处理过程平均花费时间为平时的2倍以上，所有会话卡在一个insert语句上：">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -136,14 +143,14 @@
         <div class="post-category">
             <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
             </div>
-          <span class="more-meta"> 约 1370 字 </span>
-          <span class="more-meta"> 预计阅读 3 分钟 </span>
-        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+          <span class="more-meta"> 1370 words </span>
+          <span class="more-meta"> 3 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
       </div>
     </header>
 
     <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">文章目录</h2>
+  <h2 class="post-toc-title">Contents</h2>
   <div class="post-toc-content always-active">
     <nav id="TableOfContents"></nav>
   </div>
@@ -161,17 +168,17 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>鉴于这个语句没有任何特殊之处，所以运行的慢就显得非常奇怪，于是决定从数据库层面着手，先运行了最近的一个awr报告，果然在awr报告上，有一些奇怪的事件，不太正常，如下图可以看到，library cache lock和row cache lock事件有较多等待
-<img src="2015-09-11.oracle_recyclebin_problem/top_event.png" alt="top 5事件"></p>
+<img src="top_event.png" alt="top 5事件"></p>
 <!-- more -->
 <p>这个library cache lock事件简单来说：</p>
 <blockquote>
 <p>Oracle利用Library cache lock和Library cache pin来实现并发控制，Library cache lock是在handle上获取的，而Library cache pin则是在data heap上获取。访问对象时，首先必须获取handle上的lock，简而言之，就是个对象锁</p>
 </blockquote>
 <p>这个对象锁是系统的机制，很正常，可是为什么会有茫茫多的等待，锁等待说明有对象访问冲突，需要排队，但是前面说了，只是一个再简单不过的insert 语句，哪来的锁冲突。显然，有别的鬼!来看一下top sql</p>
-<p><img src="2015-09-11.oracle_recyclebin_problem/top_sql.png" alt="top sql"></p>
+<p><img src="top_sql.png" alt="top sql"></p>
 <p>注意标红的部分，居然是delete recyclebin$，在清理回收站！可以确定，这个是系统自动触发的回收站清理，去看了下数据表空间的使用率为77%，也佐证了这个结论。可是回收站清理，为什么会导致系统这么缓慢？</p>
 <p>确定了问题sql以后，我又去看了下运行缓慢的会话正在执行的sql部分，然后发现：
-<img src="2015-09-11.oracle_recyclebin_problem/session_cursor.png" alt="session cursor"></p>
+<img src="session_cursor.png" alt="session cursor"></p>
 <p>真的在这个会话里面，存在清理recyclebin的语句。。。，另外查看了这个会话的对象锁，问题终于确定了，这个会话的确会触发recyclebin$的行锁，由于一开始的insert 语句是并发执行的，实际上每个insert语句会启动8个会话，而如果每个会话里面都会有清理 recyclebin的语句在执行，并且是针对同一对象的，那么的确会引起行锁冲突，从而导致实际上并行的8个会话互斥，需要排队执行，而清理recyclebin这个操作，实际上是很慢的，从而引起了很多的Library cache lock的事件等待。</p>
 <p>事情到这里，基本上就清楚了，但是为什么oracle会在会话里带出来清理回收站的语句？为什么清理回收站的语句在并发执行的时候又会出现行锁冲突？目前并没有找到更确切的解释。我根据发生的现象判断，oracle 自动清理回收站的动作，应该在session级别的触发器里启动的，因此会和正常的会话一起执行，由于insert语句使用了并发执行，所以这个启动动作等于同时并行执行了，在起始参数一致的情况下，就不难想象，会发生行锁冲突了。</p>
 <p>导致自动清理recyclebin这个事件发生的原因，一个是表空间使用率比较高，一个是回收站里面对象也比较多，有50多万对象，而且因为业务需要，每天都会有比较多的接口表被drop掉，回收站空间也比较大。在需要写入大量数据的时候，oracle为了释放空间，就开始自动清理回收站了。</p>
@@ -195,11 +202,11 @@
 
     <div class="post-copyright">
   <p class="copyright-item">
-    <span class="item-title">文章作者</span>
-    <span class="item-content">Imhun</span>
+    <span class="item-title">Author</span>
+    <span class="item-content"></span>
   </p>
   <p class="copyright-item">
-    <span class="item-title">上次更新</span>
+    <span class="item-title">LastMod</span>
     <span class="item-content">
         2022-07-15
         <a href="https://github.com/imhun/imhun.github.io/commit/38a6c3ef38bf03992358b740edad92eefce12e48" title="init">(38a6c3e)</a>
@@ -216,11 +223,11 @@
         <a class="prev" href="/post/2015-10-20.mac-os-ebs/">
             <i class="iconfont icon-left"></i>
             <span class="prev-text nav-default">mac os 登录ebs r12</span>
-            <span class="prev-text nav-mobile">上一篇</span>
+            <span class="prev-text nav-mobile">Prev</span>
           </a>
         <a class="next" href="/post/2015-09-02.oracle-unwrap/">
             <span class="next-text nav-default">Oracle 加密package解密(unwrap)</span>
-            <span class="next-text nav-mobile">下一篇</span>
+            <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
       </nav>
@@ -244,46 +251,33 @@
       </div>
     </main>
 
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4NWL3SM8P"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-G4NWL3SM8P', { 'anonymize_ip': true });
-}
-</script>
-
-
     <footer id="footer" class="footer">
       <div class="social-links">
       <a href="mailto:m@imhun.com" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/imhun" class="iconfont icon-github" title="github"></a>
-  <a href="https://imhun.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
   <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
       <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
   </div>
 
   <span class="copyright-year">
     &copy; 
     2013 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Imhun</span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 
@@ -302,17 +296,6 @@ if (!doNotTrack) {
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-G4NWL3SM8P', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

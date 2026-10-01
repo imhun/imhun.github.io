@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>人心如花木，皆向阳而生</title>
@@ -16,19 +16,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Imhun" /><meta name="description" content="人心如花木，皆向阳而生" /><meta name="keywords" content="技术, 大数据, rust" />
+<meta name="author" content="" /><meta name="description" content="人心如花木，皆向阳而生" /><meta name="keywords" content="技术, 大数据, rust" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.101.0 with theme even" />
+<meta name="generator" content="Hugo 0.167.0 with theme even" />
 
 
-<link rel="canonical" href="https://imhun.com/" />
-  <link href="https://imhun.com/index.xml" rel="alternate" type="application/rss+xml" title="人心如花木，皆向阳而生" />
-  <link href="https://imhun.com/index.xml" rel="feed" type="application/rss+xml" title="人心如花木，皆向阳而生" />
+<link rel="canonical" href="http://localhost:1313/" />
+  <link href="http://localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="人心如花木，皆向阳而生" />
+  <link href="http://localhost:1313/index.xml" rel="feed" type="application/rss+xml" title="人心如花木，皆向阳而生" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -41,15 +41,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="人心如花木，皆向阳而生" />
-<meta property="og:description" content="人心如花木，皆向阳而生" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://imhun.com/" />
+<meta property="og:url" content="http://localhost:1313/">
+	<meta property="og:site_name" content="人心如花木，皆向阳而生">
+	<meta property="og:title" content="人心如花木，皆向阳而生">
+	<meta property="og:description" content="人心如花木，皆向阳而生">
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="website">
 
-<meta itemprop="name" content="人心如花木，皆向阳而生">
-<meta itemprop="description" content="人心如花木，皆向阳而生"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="人心如花木，皆向阳而生"/>
-<meta name="twitter:description" content="人心如花木，皆向阳而生"/>
+	<meta itemprop="name" content="人心如花木，皆向阳而生">
+	<meta itemprop="description" content="人心如花木，皆向阳而生">
+	<meta itemprop="datePublished" content="2021-03-18T08:00:00+00:00">
+	<meta itemprop="dateModified" content="2022-07-15T21:54:38+08:00">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="人心如花木，皆向阳而生">
+	<meta name="twitter:description" content="人心如花木，皆向阳而生">
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -126,115 +131,138 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2016-10-17.hexo-blog-config-1-md/">hexo在vps上搭建blog</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/2021-03-18.rancher-logging/">Rancher-logging配置</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2016-10-17 </span>
+      <span class="post-time"> 2021-03-18 </span>
       <div class="post-category">
           <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
           </div>
-        <span class="more-meta"> 约 745 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span class="more-meta"> 104 words </span>
+        <span class="more-meta"> 1 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      hexo安装 本机以mac为例 安装程序 推荐使用brew包管理器安装，如果没有brew，首先安装brew 1 /usr/bin/ruby -e &#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&#34; 安装node.js 1 brew install node 安
+      <p>Fluent Bit用于汇总日志。Fluentd用于过滤消息并将其路由到输出</p>
+<!-- more -->
+<p><img src="rancher-logging-01.png" alt=""></p>
+<p>首先配置登录的用户密码，创建一个secrets</p>
+<p><img src="rancher-logging-02.png" alt=""></p>
+<p>配置cluster output</p>
+<p><img src="rancher-logging-03.png" alt=""></p>
+<p>需要在配置中手工加入ssl_ca_certs_from_system: true</p>
     </div>
     <div class="read-more">
-      <a href="/post/2016-10-17.hexo-blog-config-1-md/" class="read-more-link">阅读更多</a>
+      <a href="/post/2021-03-18.rancher-logging/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2016-10-08-nginx-letsencrypt/">通过let&#39;s encrypt配置网站https</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/2021-03-16.aliyun-log-collection/">阿里云日志收集</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2016-10-08 </span>
+      <span class="post-time"> 2021-03-16 </span>
       <div class="post-category">
           <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
           </div>
-        <span class="more-meta"> 约 950 字 </span>
-        <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span class="more-meta"> 660 words </span>
+        <span class="more-meta"> 2 mins read </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      网站启用https访问，首先需要一个证书机构颁发的ssl证书，目前给个人免费颁发证书的机构，比较好的是：let&rsquo;s encrypt
+      <p>参考文档：https://help.aliyun.com/document_detail/112902.html?spm=a2c4g.11186623.6.783.6c7e44f0EK6PG5</p>
     </div>
     <div class="read-more">
-      <a href="/post/2016-10-08-nginx-letsencrypt/" class="read-more-link">阅读更多</a>
+      <a href="/post/2021-03-16.aliyun-log-collection/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2016-04-16.xiaomi_r2d_ssr/">小米路由器2(R2D) 编译shadowsocks-libev 最新版</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/2019-12-23.hpa-autoscaling/">HPA水平自动缩放</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2016-04-16 </span>
+      <span class="post-time"> 2019-12-23 </span>
       <div class="post-category">
           <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
           </div>
-        <span class="more-meta"> 约 1650 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span class="more-meta"> 3 words </span>
+        <span class="more-meta"> 1 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      最近新入了一个小米路由器2，本着折腾一下更健康的原则，就想弄一个shadowsocks自动X墙。本来小米路由器号称基于openwrt，应该是
+      <p><img src="hpa-01.png" alt=""></p>
+<hr>
+<p><em>Author: Hu Weishan</em></p>
+<!-- more -->
     </div>
     <div class="read-more">
-      <a href="/post/2016-04-16.xiaomi_r2d_ssr/" class="read-more-link">阅读更多</a>
+      <a href="/post/2019-12-23.hpa-autoscaling/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2016-01-27.rust-study1/">rust练习之高阶过程</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/2019-08-23.ingress-configuration/">Ingress 配置</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2016-01-27 </span>
+      <span class="post-time"> 2019-08-23 </span>
       <div class="post-category">
           <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
           </div>
-        <span class="more-meta"> 约 1586 字 </span>
-        <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span class="more-meta"> 2877 words </span>
+        <span class="more-meta"> 6 mins read </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      在学习rust的过程中，了解了高阶函数的知识，说白了就是函数可以作为参数，也可以返回一个函数，正好最近看到了scip公开课里面讲高阶过程这一
+      <p>多节点dns配置</p>
+<!-- more -->
+<p><img src="ingress-01.png" alt=""></p>
+<p>ingress负载均衡</p>
+<p>域名hera.huaxing.com的路径转发到对应服务和端口</p>
+<p><img src="ingress-02.png" alt=""></p>
+<p>配置后端重新到/</p>
+<p>添加注释：</p>
+<p>nginx.ingress.kubernetes.io/rewrite-target=/</p>
+<p><img src="ingress-03.png" alt=""></p>
+<p>rancher的Ingress的文件大小上传限制配置</p>
     </div>
     <div class="read-more">
-      <a href="/post/2016-01-27.rust-study1/" class="read-more-link">阅读更多</a>
+      <a href="/post/2019-08-23.ingress-configuration/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
 
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/2015-12-30.rust-type-cast/">rust常用类型转换</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/2019-08-23.rancher-2-config/">Rancher 2 配置</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2015-12-30 </span>
+      <span class="post-time"> 2019-08-23 </span>
       <div class="post-category">
           <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
           </div>
-        <span class="more-meta"> 约 229 字 </span>
-        <span class="more-meta"> 预计阅读 1 分钟 </span>
+        <span class="more-meta"> 1010 words </span>
+        <span class="more-meta"> 3 mins read </span>
     </div>
   </header>
   
   <div class="post-content">
     <div class="post-summary">
-      常用原生类型转换，Vec类型转换 x类型\至类型 i32 u32 f64 String i32 n/a x as u32 x as f64 x.to_string() u32 x as u32 n/a x as f64 x.to_string() f64 x as i32 x as u32 n/a x.to_string() String* x.parse().unwrap() x.parse().unwrap() x.parse().unwrap() n/a *可以看到i32, u32, f64
+      <p>docker run -d &ndash;restart=unless-stopped &ndash;name rancher_saas \ -p 9001:80 -p 9002:443 \ rancher/rancher:latest</p>
+<!-- more -->
+<p>Rancher 2.1 gitlab流水线配置</p>
+<p>参考文档：https://rancher.com/docs/rancher/v2.x/en/tools/pipelines/configurations/#1-configuring-version-control-providers</p>
     </div>
     <div class="read-more">
-      <a href="/post/2015-12-30.rust-type-cast/" class="read-more-link">阅读更多</a>
+      <a href="/post/2019-08-23.rancher-2-config/" class="read-more-link">Read more...</a>
     </div>
   </div>
 </article>
@@ -244,7 +272,7 @@
   <nav class="pagination">
     
     <a class="next" href="/page/2/">
-        <span class="next-text">下一页</span>
+        <span class="next-text">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
   </nav>
@@ -254,46 +282,35 @@
       </div>
     </main>
 
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4NWL3SM8P"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-G4NWL3SM8P', { 'anonymize_ip': true });
-}
-</script>
-
-
     <footer id="footer" class="footer">
       <div class="social-links">
       <a href="mailto:m@imhun.com" class="iconfont icon-email" title="email"></a>
       <a href="https://github.com/imhun" class="iconfont icon-github" title="github"></a>
-  <a href="https://imhun.com/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
+    <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+  
 </div>
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
   </span>
   <span class="division">|</span>
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
   </span>
 
   <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
       <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
   </div>
 
   <span class="copyright-year">
     &copy; 
     2013 - 
-    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>Imhun</span>
+    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
   </span>
 </div>
 
@@ -312,17 +329,6 @@ if (!doNotTrack) {
 
 <script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'G-G4NWL3SM8P', 'auto');
-	ga('set', 'anonymizeIp', true);
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

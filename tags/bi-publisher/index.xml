@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Bi Publisher on 人心如花木，皆向阳而生</title>
-    <link>https://imhun.com/tags/bi-publisher/</link>
-    <description>Recent content in Bi Publisher on 人心如花木，皆向阳而生</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 05 Aug 2013 15:41:32 +0000</lastBuildDate><atom:link href="https://imhun.com/tags/bi-publisher/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>64位windows中安装BIPublisherDesktop</title>
-      <link>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</link>
-      <pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
-      
-      <guid>https://imhun.com/post/2013-08-05-oracle-bi-publisher-2013/</guid>
-      <description>1.JRE问题 在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>Bi Publisher on 人心如花木，皆向阳而生</title>
+		<link>http://localhost:1313/tags/bi-publisher/</link>
+		<description>Recent content in Bi Publisher on 人心如花木，皆向阳而生</description>
+		<generator>Hugo</generator>
+		<language>en</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 15 Jul 2022 21:54:38 +0800</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/tags/bi-publisher/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>64位windows中安装BIPublisherDesktop</title>
+				<link>http://localhost:1313/post/2013-08-05-oracle-bi-publisher-2013/</link>
+				<pubDate>Mon, 05 Aug 2013 15:41:32 +0000</pubDate>
+				<guid>http://localhost:1313/post/2013-08-05-oracle-bi-publisher-2013/</guid>
+				<description>&lt;ul&gt;&#xA;&lt;li&gt;1.JRE问题&#xA;在x64的win7或者win8上安装BIPublisherDesktop32时，会提示需要jre 1.6或更高版本,哪怕已经安装过了jre了，也提示同样的错。&#xA;解决办法:安装x64的jre，至于原因，问候oralce去吧&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;!-- more --&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;2.安装BIPublisherDesktop32完成后，在word 2013里找不到BI Publisher的菜单项，嗯嗯，又到了问候oracle全家的时候了&#xA;解决办法:在BI Publisher 的安装目录下，比如本机是C:\Program Files (x86)\Oracle\BIPublisher\BI Publisher Desktop\DotNetInstallFiles，运行里面的TBMenusSetup2007，目前BI Publisher Desktop不支持x64版的office2013，虽然oracle 提供了一个BIPublisherDesktop64安装包，所以骚年，要用BIPublisherDesktop，安装32位office2013吧&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+	</channel>
 </rss>
