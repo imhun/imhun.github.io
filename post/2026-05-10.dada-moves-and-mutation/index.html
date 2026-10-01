@@ -1,0 +1,72 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>Dada 的变异与权限 - 人心如花木，皆向阳而生</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content><meta name=description content=" 来源：Dada: moves and mutation，Niko Matsakis，2026-02-10 系列：Dada
+从这篇开始，Dada 真的像 Rust 了。
+类 最省事的写法是把字段放进括号，同时隐式声明一个构造函数：
+"><meta name=keywords content="技术,大数据,rust"><meta name=generator content="Hugo 0.167.0 with theme even"><link rel=canonical href=https://imhun.com/post/2026-05-10.dada-moves-and-mutation/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:url" content="https://imhun.com/post/2026-05-10.dada-moves-and-mutation/"><meta property="og:site_name" content="人心如花木，皆向阳而生"><meta property="og:title" content="Dada 的变异与权限"><meta property="og:description" content="来源：Dada: moves and mutation，Niko Matsakis，2026-02-10 系列：Dada
+从这篇开始，Dada 真的像 Rust 了。
+类 最省事的写法是把字段放进括号，同时隐式声明一个构造函数："><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2026-05-10T09:00:00+00:00"><meta property="article:modified_time" content="2026-05-10T09:00:00+00:00"><meta property="article:tag" content="Rust"><meta itemprop=name content="Dada 的变异与权限"><meta itemprop=description content="来源：Dada: moves and mutation，Niko Matsakis，2026-02-10 系列：Dada
+从这篇开始，Dada 真的像 Rust 了。
+类 最省事的写法是把字段放进括号，同时隐式声明一个构造函数："><meta itemprop=datePublished content="2026-05-10T09:00:00+00:00"><meta itemprop=dateModified content="2026-05-10T09:00:00+00:00"><meta itemprop=wordCount content="692"><meta itemprop=keywords content="Rust"><meta name=twitter:card content="summary"><meta name=twitter:title content="Dada 的变异与权限"><meta name=twitter:description content="来源：Dada: moves and mutation，Niko Matsakis，2026-02-10 系列：Dada
+从这篇开始，Dada 真的像 Rust 了。
+类 最省事的写法是把字段放进括号，同时隐式声明一个构造函数："><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Imhun</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Imhun</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Dada 的变异与权限</h1><div class=post-meta><span class=post-time>2026-05-10</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>692 words </span><span class=more-meta>2 mins read </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#类>类</a></li><li><a href=#默认只读-才可变>默认只读，<code>!</code> 才可变</a></li><li><a href=#移动是显式的>移动是显式的</a></li><li><a href=#和-rust-对照>和 Rust 对照</a></li><li><a href=#为什么这么设计>为什么这么设计</a></li><li><a href=#一处别被误导的类比>一处别被误导的类比</a></li><li><a href=#相关>相关</a></li></ul></li></ul></nav></div></div><div class=post-content><blockquote><p>来源：<a href=https://smallcultfollowing.com/babysteps/blog/2026/02/10/dada-moves-and-mutation/>Dada: moves and mutation</a>，Niko Matsakis，2026-02-10
+系列：<a href=https://smallcultfollowing.com/babysteps/series/dada/>Dada</a></p></blockquote><p>从这篇开始，Dada 真的像 Rust 了。</p><h2 id=类>类</h2><p>最省事的写法是把字段放进括号，同时隐式声明一个构造函数：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>class Point(x: u32, y: u32) {}
+</span></span></code></pre></td></tr></table></div></div><p>它是下面这个更像 Rust 的写法的语法糖：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>class Point {
+</span></span><span class=line><span class=cl>    x: u32
+</span></span><span class=line><span class=cl>    y: u32
+</span></span><span class=line><span class=cl>    fn new() -&gt; Point {
+</span></span><span class=line><span class=cl>        Point { x, y }
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=默认只读-才可变>默认只读，<code>!</code> 才可变</h2><p>参数默认拿到的是<strong>只读访问</strong>，试图改字段会报错：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>fn print_point(p: Point) {
+</span></span><span class=line><span class=cl>    p.x += 1 # 错误
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>加上 <code>!</code> 就变成指向调用方实例的可变引用，等价于 Rust 的 <code>&amp;mut Point</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>fn translate_point(point!: Point, x: u32, y: u32) {
+</span></span><span class=line><span class=cl>    point.x += x
+</span></span><span class=line><span class=cl>    point.y += y
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let p = Point(22, 44)
+</span></span><span class=line><span class=cl>translate_point(p!, 2, 2) # 调用点也要带 !
+</span></span></code></pre></td></tr></table></div></div><h2 id=移动是显式的>移动是显式的</h2><p>这是和 Rust 差得最明显的一处。Rust 里 <code>print_point(p)</code> 会<strong>移动</strong> <code>p</code>，之后就不能再用了；Dada 默认给的是只读引用。</p><p>需要所有权时参数声明写 <code>given</code>，调用方用 <code>.give</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>fn take_point(p: given Point) { ... }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let p = Point(22, 44)
+</span></span><span class=line><span class=cl>take_point(p.give)
+</span></span><span class=line><span class=cl>take_point(p.give) # 错误：不能给两次
+</span></span></code></pre></td></tr></table></div></div><h2 id=和-rust-对照>和 Rust 对照</h2><table><thead><tr><th>Rust</th><th>Dada</th></tr></thead><tbody><tr><td><code>vec.len()</code></td><td><code>vec.len()</code></td></tr><tr><td><code>map.get(&amp;key)</code></td><td><code>map.get(key)</code></td></tr><tr><td><code>vec.push(element)</code></td><td><code>vec!.push(element.give)</code></td></tr><tr><td><code>vec.append(&amp;mut other)</code></td><td><code>vec!.append(other!)</code></td></tr><tr><td><code>message.send_to(&amp;channel)</code></td><td><code>message.give.send_to(channel)</code></td></tr></tbody></table><h2 id=为什么这么设计>为什么这么设计</h2><p><strong>方便是默认的。</strong> 最常用的写法应该最短，所以读成了默认。</p><p><strong>一切显式，但不啰嗦。</strong> Rust 的 <code>.</code> 具体做什么取决于调用的方法——可能改、可能移动、可能建临时值；Dada 要求在调用点就能看出来。这条规矩其实来自早期做渐进编程的日子：方法上没有类型标注时，没法判断 <code>foo.bar()</code> 该拿共享借用还是可变借用，所以需要一种在调用点就能看清一切、又显式的记法。</p><p><strong>后缀运算符更好组合。</strong> Dada 尽量不用 <code>&amp;mut</code> 这种前缀运算符，它们和 <code>.</code> 记法配合得不好。</p><h2 id=一处别被误导的类比>一处别被误导的类比</h2><p>说“Dada 默认给只读引用，相当于 <code>&amp;x</code>”只有直觉上的对。实际有误导——Dada 的引用和 Rust 有一处非常关键的不同，见 <a href=/post/2026-05-27.dada-internal-references/>dada 的内部引用</a>。</p><h2 id=相关>相关</h2><ul><li><a href=/post/2026-05-09.dada-hello/>hello dada</a>：上一篇，字符串</li><li><a href=/post/2026-05-14.dada-sharing/>dada 的共享</a>：下一篇，<code>shared</code> 权限</li></ul></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content></span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2026-05-10</span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/rust/>rust</a></div><nav class=post-nav><a class=prev href=/post/2026-05-14.dada-sharing/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">Dada 的共享</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a><a class=next href=/post/2026-05-09.dada-hello/><span class="next-text nav-default">Hello, Dada</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=imhun/imhun.github.io issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:m@imhun.com class="iconfont icon-email" title=email></a><a href=https://github.com/imhun class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span><span class=division>|</span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
+2013 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span></span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-G4NWL3SM8P"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-G4NWL3SM8P")}</script></body></html>
