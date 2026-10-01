@@ -1,539 +1,164 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>unsafe - 人心如花木，皆向阳而生</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="" /><meta name="description" content=" 1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>unsafe - 人心如花木，皆向阳而生</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content><meta name=description content=" 1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
 计算机底层硬件有内在的不安全性，
-" /><meta name="keywords" content="技术, 大数据, rust" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.167.0 with theme even" />
-
-
-<link rel="canonical" href="http://localhost:1313/post/2018-03-23.rust-unsafe/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:url" content="http://localhost:1313/post/2018-03-23.rust-unsafe/">
-	<meta property="og:site_name" content="人心如花木，皆向阳而生">
-	<meta property="og:title" content="unsafe">
-	<meta property="og:description" content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
-计算机底层硬件有内在的不安全性，">
-	<meta property="og:locale" content="en">
-	<meta property="og:type" content="article">
-		<meta property="article:section" content="post">
-		<meta property="article:published_time" content="2018-03-23T09:00:00+00:00">
-		<meta property="article:modified_time" content="2018-03-23T09:00:00+00:00">
-		<meta property="article:tag" content="Rust">
-
-	<meta itemprop="name" content="unsafe">
-	<meta itemprop="description" content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
-计算机底层硬件有内在的不安全性，">
-	<meta itemprop="datePublished" content="2018-03-23T09:00:00+00:00">
-	<meta itemprop="dateModified" content="2018-03-23T09:00:00+00:00">
-	<meta itemprop="wordCount" content="1428">
-	<meta itemprop="keywords" content="Rust">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="unsafe">
-	<meta name="twitter:description" content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
-计算机底层硬件有内在的不安全性，">
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Imhun</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About</li>
-      </a>
-  </ul>
-
-  
-
-
-</nav>
-
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Imhun</a>
-</div>
-
-
-
-
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
-      </li>
-  </ul>
-</nav>
-
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">unsafe</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2018-03-23 </span>
-        <div class="post-category">
-            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
-            </div>
-          <span class="more-meta"> 1428 words </span>
-          <span class="more-meta"> 3 mins read </span>
-        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
-      </div>
-    </header>
-
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">Contents</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents"></nav>
-  </div>
-</div>
-    <div class="post-content">
-      <div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><!-- more -->
-<p>本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性</p>
-<p>计算机底层硬件有内在的不安全性，</p>
-<p>当面向底层系统编程时，</p>
-<p>与操作系统交互或者编写操作系统时，</p>
-<p>与其他语言交互时，</p>
-<p>这些情况下，有些操作unsafe操作是必须的，需要关注更多的实现细节，不仅因为性能，更重要的，这些细节关乎正确与否的问题。</p>
-<p>rust可以认为是两种语言的联合体：Safe Rust and Unsafe Rust</p>
-<p>Safe rust是真正的rust，不需要担心任何类型安全或者内存安全性。不会导致任何未定义行为(undefined behavior)</p>
-<p>可以使用#![forbid(unsafe_code)]来禁止unsafe代码块</p>
-<p>通过unsafe代码块标记，以下是四种unsafe操作，不会被编译器检查</p>
-<ol>
-<li>
-<p>Dereferencing a raw pointer，解引用裸指针</p>
-</li>
-<li>
-<p>Calling an unsafe function or method，调用unsafe的函数</p>
-</li>
-<li>
-<p>Accessing or modifying a mutable static variable，访问或者修改可变静态变量</p>
-</li>
-<li>
-<p>Implementing an unsafe trait，实现unsafe trait</p>
-</li>
-</ol>
-<p>尽可能少的使用unsafe代码，一旦出现内存安全问题，只需要诊断unsafe部分的代码，因为其他部分已经保证了安全性</p>
-<p>为了尽可能的隔离unsafe代码，应该通过安全抽象封装unsafe代码，并提供safe api</p>
-<p>标准库中基于unsafe代码的安全抽象已经通过了验证</p>
-<p>裸指针</p>
-<ul>
-<li>
-<p>裸指针允许忽略借用规则，可以同时有不可变及一个或者多个可变指针，指向同一位置</p>
-</li>
-<li>
-<p>不保证指向有效的内存</p>
-</li>
-<li>
-<p>允许为null</p>
-</li>
-<li>
-<p>没有实现自动释放</p>
-</li>
-</ul>
-<p>可以在安全代码中创建裸指针</p>
-<p>通过引用创建裸指针</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>通过内存地址创建裸指针</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x012345</span><span class="k">usize</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>但是解引用裸指针必须在unsafe块中</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">num</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;r1 is: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">r1</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;r2 is: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">r2</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>裸指针的主要用途之一是用于和c代码交互，另一个用途是用来构建一些borrow checker不允许的安全抽象</p>
-<ul>
-<li>调用不安全的函数</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">dangerous</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">dangerous</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#creating-a-safe-abstraction-over-unsafe-code">Creating a Safe Abstraction Over Unsafe Code</a></p>
-<p>以下是标准库的split_at_mut函数的示例</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">slice</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">split_at_mut</span><span class="p">(</span><span class="n">slice</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">i32</span><span class="p">],</span><span class="w"> </span><span class="n">mid</span>: <span class="kt">usize</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">i32</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">i32</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slice</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slice</span><span class="p">.</span><span class="n">as_mut_ptr</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">assert!</span><span class="p">(</span><span class="n">mid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">len</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">(</span><span class="n">slice</span>::<span class="n">from_raw_parts_mut</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">),</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">slice</span>::<span class="n">from_raw_parts_mut</span><span class="p">(</span><span class="n">ptr</span><span class="p">.</span><span class="n">offset</span><span class="p">(</span><span class="n">mid</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">isize</span><span class="p">),</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mid</span><span class="p">))</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">unsafe的错误用法</span><span class="err">，回到导致任意的内存访问，程序可能会</span><span class="n">crash或者出现segfault</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">slice</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x012345</span><span class="k">usize</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="o">*</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">slice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">slice</span>::<span class="n">from_raw_parts_mut</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">};</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>因此需要非常小心的使用unsafe代码，并确保内存安全</p>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#extern--functions-for-calling-external-code-are-unsafe">extern Functions for Calling External Code are Unsafe</a></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">extern关键字</span><span class="err">，创建或者使用</span><span class="n">oreign</span><span class="w"> </span><span class="n">Function</span><span class="w"> </span><span class="n">Interface</span><span class="w"> </span><span class="p">(</span><span class="no">FFI</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">extern</span><span class="w"> </span><span class="s">&#34;C&#34;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">abs</span><span class="p">(</span><span class="n">input</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Absolute value of -3 according to C: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>&ldquo;C&quot;表示外部函数使用的application binary interface (ABI) ，c语言abi是比较通用的</p>
-<p>由于外部函数rust无法保证安全性，所以需要unsafe标记，并由你来确保外部函数是安全的</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">[</span><span class="n">Calling</span><span class="w"> </span><span class="n">Rust</span><span class="w"> </span><span class="n">Functions</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Other</span><span class="w"> </span><span class="n">Languages</span><span class="p">](</span><span class="n">https</span>:<span class="c1">//doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#calling-rust-functions-from-other-languages)
-</span></span></span><span class="line"><span class="cl"><span class="cp">#[no_mangle]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">extern</span><span class="w"> </span><span class="s">&#34;C&#34;</span><span class="w"> </span><span class="k">fn</span> <span class="nf">call_from_c</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Just called a Rust function from C!&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><ul>
-<li><a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable">Accessing or Modifying a Mutable Static Variable</a></li>
-</ul>
-<p>全局变量</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">static</span><span class="w"> </span><span class="no">HELLO_WORLD</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&#34;Hello, world!&#34;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;name is: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="no">HELLO_WORLD</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">static变量可以是可变的</span><span class="err">，访问和修改</span><span class="n">static变量都是unsafe</span><span class="err">，多线程访问会导致数据竞争</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">static</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="no">COUNTER</span>: <span class="kt">u32</span> <span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">add_to_count</span><span class="p">(</span><span class="n">inc</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="no">COUNTER</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">inc</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">add_to_count</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;COUNTER: </span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="no">COUNTER</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>可变数据的跨线程访问是困难的，需要使用并发相关的技术和线程安全的指针</p>
-<ul>
-<li><a href="https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#implementing-an-unsafe-trait">Implementing an Unsafe Trait</a></li>
-</ul>
-<p>Unsafe trait中的方法有一些编译器无法验证的不变式，因此使用unsafe标记来保证我们自己维护了这些不变式</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Foo</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// methods go here
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">unsafe</span><span class="w"> </span><span class="k">impl</span><span class="w"> </span><span class="n">Foo</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// method implementations go here
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>有两种裸指针，*const T and *mut T</p>
-
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">Author</span>
-    <span class="item-content"></span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">LastMod</span>
-    <span class="item-content">
-        2018-03-23
-        
-    </span>
-  </p>
-  
-  
-</div>
-<footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/rust/">rust</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/2018-03-25.rust-concurrency/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">并发</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
-        <a class="next" href="/post/2018-03-21.covariance-contravariance/">
-            <span class="next-text nav-default">Covariance/contravariance</span>
-            <span class="next-text nav-mobile">Next</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-    <script src="https://utteranc.es/client.js"
-            repo="imhun/imhun.github.io"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="mailto:m@imhun.com" class="iconfont icon-email" title="email"></a>
-      <a href="https://github.com/imhun" class="iconfont icon-github" title="github"></a>
-  
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    Theme - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
-      <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
-  </div>
-
-  <span class="copyright-year">
-    &copy; 
-    2013 - 
-    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
-  </span>
-</div>
-
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-
-
-
-<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
-
-
-
-
-
-
-
-
-</body>
-</html>
+"><meta name=keywords content="技术,大数据,rust"><meta name=generator content="Hugo 0.167.0 with theme even"><link rel=canonical href=https://imhun.com/post/2018-03-23.rust-unsafe/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:url" content="https://imhun.com/post/2018-03-23.rust-unsafe/"><meta property="og:site_name" content="人心如花木，皆向阳而生"><meta property="og:title" content="unsafe"><meta property="og:description" content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
+计算机底层硬件有内在的不安全性，"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2018-03-23T09:00:00+00:00"><meta property="article:modified_time" content="2026-10-01T19:43:55+08:00"><meta property="article:tag" content="Rust"><meta itemprop=name content="unsafe"><meta itemprop=description content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
+计算机底层硬件有内在的不安全性，"><meta itemprop=datePublished content="2018-03-23T09:00:00+00:00"><meta itemprop=dateModified content="2026-10-01T19:43:55+08:00"><meta itemprop=wordCount content="1428"><meta itemprop=keywords content="Rust"><meta name=twitter:card content="summary"><meta name=twitter:title content="unsafe"><meta name=twitter:description content="1 unsafe 本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性
+计算机底层硬件有内在的不安全性，"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Imhun</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Imhun</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>unsafe</h1><div class=post-meta><span class=post-time>2018-03-23</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>1428 words </span><span class=more-meta>3 mins read </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>unsafe</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>本质上，静态分析是保守的，有时候需要一些代码但rust安全规则不允许，unsafe放开规则的限制，让你自己保证安全性</p><p>计算机底层硬件有内在的不安全性，</p><p>当面向底层系统编程时，</p><p>与操作系统交互或者编写操作系统时，</p><p>与其他语言交互时，</p><p>这些情况下，有些操作unsafe操作是必须的，需要关注更多的实现细节，不仅因为性能，更重要的，这些细节关乎正确与否的问题。</p><p>rust可以认为是两种语言的联合体：Safe Rust and Unsafe Rust</p><p>Safe rust是真正的rust，不需要担心任何类型安全或者内存安全性。不会导致任何未定义行为(undefined behavior)</p><p>可以使用#![forbid(unsafe_code)]来禁止unsafe代码块</p><p>通过unsafe代码块标记，以下是四种unsafe操作，不会被编译器检查</p><ol><li><p>Dereferencing a raw pointer，解引用裸指针</p></li><li><p>Calling an unsafe function or method，调用unsafe的函数</p></li><li><p>Accessing or modifying a mutable static variable，访问或者修改可变静态变量</p></li><li><p>Implementing an unsafe trait，实现unsafe trait</p></li></ol><p>尽可能少的使用unsafe代码，一旦出现内存安全问题，只需要诊断unsafe部分的代码，因为其他部分已经保证了安全性</p><p>为了尽可能的隔离unsafe代码，应该通过安全抽象封装unsafe代码，并提供safe api</p><p>标准库中基于unsafe代码的安全抽象已经通过了验证</p><p>裸指针</p><ul><li><p>裸指针允许忽略借用规则，可以同时有不可变及一个或者多个可变指针，指向同一位置</p></li><li><p>不保证指向有效的内存</p></li><li><p>允许为null</p></li><li><p>没有实现自动释放</p></li></ul><p>可以在安全代码中创建裸指针</p><p>通过引用创建裸指针</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>5</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>&amp;</span><span class=n>num</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>const</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>mut</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>通过内存地址创建裸指针</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>address</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mh>0x012345</span><span class=k>usize</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>address</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>const</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>但是解引用裸指针必须在unsafe块中</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>5</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>&amp;</span><span class=n>num</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>const</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>mut</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;r1 is: </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=o>*</span><span class=n>r1</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;r2 is: </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=o>*</span><span class=n>r2</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>裸指针的主要用途之一是用于和c代码交互，另一个用途是用来构建一些borrow checker不允许的安全抽象</p><ul><li>调用不安全的函数</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=k>fn</span> <span class=nf>dangerous</span><span class=p>()</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>dangerous</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#creating-a-safe-abstraction-over-unsafe-code>Creating a Safe Abstraction Over Unsafe Code</a></p><p>以下是标准库的split_at_mut函数的示例</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>slice</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>split_at_mut</span><span class=p>(</span><span class=n>slice</span>: <span class=kp>&amp;</span><span class=nc>mut</span><span class=w> </span><span class=p>[</span><span class=kt>i32</span><span class=p>],</span><span class=w> </span><span class=n>mid</span>: <span class=kt>usize</span><span class=p>)</span><span class=w> </span>-&gt; <span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=p>[</span><span class=kt>i32</span><span class=p>],</span><span class=w> </span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=p>[</span><span class=kt>i32</span><span class=p>])</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>len</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>slice</span><span class=p>.</span><span class=n>len</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>ptr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>slice</span><span class=p>.</span><span class=n>as_mut_ptr</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>assert!</span><span class=p>(</span><span class=n>mid</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>len</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>(</span><span class=n>slice</span>::<span class=n>from_raw_parts_mut</span><span class=p>(</span><span class=n>ptr</span><span class=p>,</span><span class=w> </span><span class=n>mid</span><span class=p>),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>slice</span>::<span class=n>from_raw_parts_mut</span><span class=p>(</span><span class=n>ptr</span><span class=p>.</span><span class=n>offset</span><span class=p>(</span><span class=n>mid</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=kt>isize</span><span class=p>),</span><span class=w> </span><span class=n>len</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>mid</span><span class=p>))</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>unsafe的错误用法</span><span class=err>，回到导致任意的内存访问，程序可能会</span><span class=n>crash或者出现segfault</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>slice</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>address</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mh>0x012345</span><span class=k>usize</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>r</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>address</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=o>*</span><span class=k>mut</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>slice</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>slice</span>::<span class=n>from_raw_parts_mut</span><span class=p>(</span><span class=n>r</span><span class=p>,</span><span class=w> </span><span class=mi>10000</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>};</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>因此需要非常小心的使用unsafe代码，并确保内存安全</p><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#extern--functions-for-calling-external-code-are-unsafe>extern Functions for Calling External Code are Unsafe</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>extern关键字</span><span class=err>，创建或者使用</span><span class=n>oreign</span><span class=w> </span><span class=n>Function</span><span class=w> </span><span class=n>Interface</span><span class=w> </span><span class=p>(</span><span class=no>FFI</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>extern</span><span class=w> </span><span class=s>&#34;C&#34;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>abs</span><span class=p>(</span><span class=n>input</span>: <span class=kt>i32</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;Absolute value of -3 according to C: </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=n>abs</span><span class=p>(</span><span class=o>-</span><span class=mi>3</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>&ldquo;C"表示外部函数使用的application binary interface (ABI) ，c语言abi是比较通用的</p><p>由于外部函数rust无法保证安全性，所以需要unsafe标记，并由你来确保外部函数是安全的</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=p>[</span><span class=n>Calling</span><span class=w> </span><span class=n>Rust</span><span class=w> </span><span class=n>Functions</span><span class=w> </span><span class=n>from</span><span class=w> </span><span class=n>Other</span><span class=w> </span><span class=n>Languages</span><span class=p>](</span><span class=n>https</span>:<span class=c1>//doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#calling-rust-functions-from-other-languages)
+</span></span></span><span class=line><span class=cl><span class=cp>#[no_mangle]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>extern</span><span class=w> </span><span class=s>&#34;C&#34;</span><span class=w> </span><span class=k>fn</span> <span class=nf>call_from_c</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;Just called a Rust function from C!&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><ul><li><a href=https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable>Accessing or Modifying a Mutable Static Variable</a></li></ul><p>全局变量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>static</span><span class=w> </span><span class=no>HELLO_WORLD</span>: <span class=kp>&amp;</span><span class=kt>str</span> <span class=o>=</span><span class=w> </span><span class=s>&#34;Hello, world!&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;name is: </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=no>HELLO_WORLD</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>static变量可以是可变的</span><span class=err>，访问和修改</span><span class=n>static变量都是unsafe</span><span class=err>，多线程访问会导致数据竞争</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>static</span><span class=w> </span><span class=k>mut</span><span class=w> </span><span class=no>COUNTER</span>: <span class=kt>u32</span> <span class=o>=</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>add_to_count</span><span class=p>(</span><span class=n>inc</span>: <span class=kt>u32</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=no>COUNTER</span><span class=w> </span><span class=o>+=</span><span class=w> </span><span class=n>inc</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=n>add_to_count</span><span class=p>(</span><span class=mi>3</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;COUNTER: </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=no>COUNTER</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>可变数据的跨线程访问是困难的，需要使用并发相关的技术和线程安全的指针</p><ul><li><a href=https://doc.rust-lang.org/book/second-edition/ch19-01-unsafe-rust.html#implementing-an-unsafe-trait>Implementing an Unsafe Trait</a></li></ul><p>Unsafe trait中的方法有一些编译器无法验证的不变式，因此使用unsafe标记来保证我们自己维护了这些不变式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=k>trait</span><span class=w> </span><span class=n>Foo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// methods go here
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>unsafe</span><span class=w> </span><span class=k>impl</span><span class=w> </span><span class=n>Foo</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=kt>i32</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// method implementations go here
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>有两种裸指针，*const T and *mut T</p></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content></span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2026-10-01
+<a href=https://github.com/imhun/imhun.github.io/commit/f767aced0c8b7c81a0ad5e449fa2e1ca83187580 title="同步 OneNote 笔记到博客，并修复图片路径">(f767ace)</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/rust/>rust</a></div><nav class=post-nav><a class=prev href=/post/2018-03-25.rust-concurrency/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">并发</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a><a class=next href=/post/2018-03-21.covariance-contravariance/><span class="next-text nav-default">Covariance/contravariance</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=imhun/imhun.github.io issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:m@imhun.com class="iconfont icon-email" title=email></a><a href=https://github.com/imhun class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span><span class=division>|</span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
+2013 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span></span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-G4NWL3SM8P"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-G4NWL3SM8P")}</script></body></html>

@@ -1,499 +1,134 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>类型 - 人心如花木，皆向阳而生</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="" /><meta name="description" content="类型
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><title>类型 - 人心如花木，皆向阳而生</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content><meta name=description content="类型
 Struct
 Impl block 可以有多个，但必须在定义struct的crate中
 Associated Types
 关联类型
 Operator Overloading and Default Type Parameters
 默认类型参数
-1 2 3 4 trait Add&lt;RHS=Self&gt; { type Output; fn add(self, rhs: RHS) -&gt; Self::Output; } 2个主要的用法
+1 2 3 4 trait Add<RHS=Self> { type Output; fn add(self, rhs: RHS) -> Self::Output; } 2个主要的用法
 To extend a type without breaking existing code.扩展类型而不破坏已有代码
 To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到
-" /><meta name="keywords" content="技术, 大数据, rust" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.167.0 with theme even" />
-
-
-<link rel="canonical" href="http://localhost:1313/post/2017-12-15.rust-types/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-
-
-<meta property="og:url" content="http://localhost:1313/post/2017-12-15.rust-types/">
-	<meta property="og:site_name" content="人心如花木，皆向阳而生">
-	<meta property="og:title" content="类型">
-	<meta property="og:description" content="类型
+"><meta name=keywords content="技术,大数据,rust"><meta name=generator content="Hugo 0.167.0 with theme even"><link rel=canonical href=https://imhun.com/post/2017-12-15.rust-types/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:url" content="https://imhun.com/post/2017-12-15.rust-types/"><meta property="og:site_name" content="人心如花木，皆向阳而生"><meta property="og:title" content="类型"><meta property="og:description" content="类型
 Struct
 Impl block 可以有多个，但必须在定义struct的crate中
 Associated Types
 关联类型
 Operator Overloading and Default Type Parameters
 默认类型参数
-1 2 3 4 trait Add&lt;RHS=Self&gt; { type Output; fn add(self, rhs: RHS) -&gt; Self::Output; } 2个主要的用法
+1 2 3 4 trait Add<RHS=Self> { type Output; fn add(self, rhs: RHS) -> Self::Output; } 2个主要的用法
 To extend a type without breaking existing code.扩展类型而不破坏已有代码
-To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到">
-	<meta property="og:locale" content="en">
-	<meta property="og:type" content="article">
-		<meta property="article:section" content="post">
-		<meta property="article:published_time" content="2017-12-15T09:00:00+00:00">
-		<meta property="article:modified_time" content="2017-12-15T09:00:00+00:00">
-		<meta property="article:tag" content="Rust">
-
-	<meta itemprop="name" content="类型">
-	<meta itemprop="description" content="类型
+To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2017-12-15T09:00:00+00:00"><meta property="article:modified_time" content="2026-10-01T19:43:55+08:00"><meta property="article:tag" content="Rust"><meta itemprop=name content="类型"><meta itemprop=description content="类型
 Struct
 Impl block 可以有多个，但必须在定义struct的crate中
 Associated Types
 关联类型
 Operator Overloading and Default Type Parameters
 默认类型参数
-1 2 3 4 trait Add&lt;RHS=Self&gt; { type Output; fn add(self, rhs: RHS) -&gt; Self::Output; } 2个主要的用法
+1 2 3 4 trait Add<RHS=Self> { type Output; fn add(self, rhs: RHS) -> Self::Output; } 2个主要的用法
 To extend a type without breaking existing code.扩展类型而不破坏已有代码
-To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到">
-	<meta itemprop="datePublished" content="2017-12-15T09:00:00+00:00">
-	<meta itemprop="dateModified" content="2017-12-15T09:00:00+00:00">
-	<meta itemprop="wordCount" content="1004">
-	<meta itemprop="keywords" content="Rust">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="类型">
-	<meta name="twitter:description" content="类型
+To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到"><meta itemprop=datePublished content="2017-12-15T09:00:00+00:00"><meta itemprop=dateModified content="2026-10-01T19:43:55+08:00"><meta itemprop=wordCount content="1004"><meta itemprop=keywords content="Rust"><meta name=twitter:card content="summary"><meta name=twitter:title content="类型"><meta name=twitter:description content="类型
 Struct
 Impl block 可以有多个，但必须在定义struct的crate中
 Associated Types
 关联类型
 Operator Overloading and Default Type Parameters
 默认类型参数
-1 2 3 4 trait Add&lt;RHS=Self&gt; { type Output; fn add(self, rhs: RHS) -&gt; Self::Output; } 2个主要的用法
+1 2 3 4 trait Add<RHS=Self> { type Output; fn add(self, rhs: RHS) -> Self::Output; } 2个主要的用法
 To extend a type without breaking existing code.扩展类型而不破坏已有代码
-To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到">
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Imhun</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">Home</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">Archives</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">Tags</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">Categories</li>
-      </a><a href="/about/">
-        <li class="mobile-menu-item">About</li>
-      </a>
-  </ul>
-
-  
-
-
-</nav>
-
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Imhun</a>
-</div>
-
-
-
-
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">Home</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">Archives</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">Tags</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">Categories</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/about/">About</a>
-      </li>
-  </ul>
-</nav>
-
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">类型</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2017-12-15 </span>
-        <div class="post-category">
-            <a href="/categories/%E6%8A%80%E6%9C%AF/"> 技术 </a>
-            </div>
-          <span class="more-meta"> 1004 words </span>
-          <span class="more-meta"> 3 mins read </span>
-        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
-      </div>
-    </header>
-
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">Contents</h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents"></nav>
-  </div>
-</div>
-    <div class="post-content">
-      <p>类型</p>
-<!-- more -->
-<p>Struct</p>
-<p>Impl block 可以有多个，但必须在定义struct的crate中</p>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#associated-types">Associated Types</a></p>
-<p>关联类型</p>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#operator-overloading-and-default-type-parameters">Operator Overloading and Default Type Parameters</a></p>
-<p>默认类型参数</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">trait</span><span class="w"> </span><span class="n">Add</span><span class="o">&lt;</span><span class="no">RHS</span><span class="o">=</span><span class="bp">Self</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">type</span> <span class="nc">Output</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span>: <span class="nc">RHS</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span>::<span class="n">Output</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>2个主要的用法</p>
-<ol>
-<li>
-<p>To extend a type without breaking existing code.扩展类型而不破坏已有代码</p>
-</li>
-<li>
-<p>To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到</p>
-</li>
-</ol>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation">Fully Qualified Syntax for Disambiguation</a></p>
-<p>完全限定函数调用</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">Type</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Trait</span><span class="o">&gt;</span>::<span class="n">function</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#supertraits-to-use-one-traits-functionality-within-another-trait">Supertraits to Use One Trait’s Functionality Within Another Trait</a></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">trait继承</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">trait</span><span class="w"> </span><span class="n">OutlinePrint</span>: <span class="nc">fmt</span>::<span class="n">Display</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">outline_print</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">to_string</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;*&#34;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;*</span><span class="si">{}</span><span class="s">*&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;* </span><span class="si">{}</span><span class="s"> *&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;*</span><span class="si">{}</span><span class="s">*&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34; &#34;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;*&#34;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>New type pattern</p>
-<p>实现外部类型及外部trait</p>
-<p>类型安全及抽象，封装具体实现类型</p>
-<p>类型别名，与原类型相同</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">type</span> <span class="nc">Kilometers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="err">主要用于减少重复</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">type</span> <span class="nc">Thunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="nb">Fn</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Send</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">&#39;static</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">type</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Error</span><span class="o">&gt;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#the-never-type--that-never-returns">The Never Type,</a>!, that Never Returns</p>
-<p>!：在类型理论中被称为empty type，因为该类型没有值</p>
-<p>rust更喜欢称为Never Type，代表该类型用于函数返回类型时，表示函数从不返回(Never return)。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">bar</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// --snip--
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>上面的例子读作：函数bar返回Never，这类函数称之为：发散函数(diverging functions)</p>
-<p>!可以强制转换为任意类型</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">panic</span><span class="o">!</span><span class="err">的返回类型为</span><span class="o">!</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#dynamically-sized-types--sized">Dynamically Sized Types &amp;</a>Sized</p>
-<p>又叫‘DSTs’ or ‘unsized types’，表示只能在运行时知道大小</p>
-<p>比如str,不能为dst类型创建一个值</p>
-<p>&amp;str有str的地址及长度。</p>
-<p>只能把dst类型放在某种类型的指针后面</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">traits也是dst</span><span class="err">，只能通过指针使用，</span><span class="o">&amp;</span><span class="n">Trait</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="n">Trait</span><span class="o">&gt;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p><a href="https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#the-sized-trait">The</a>Sized Trait</p>
-<p>表示是否可以在编译时确定类型大小，编译器自动为所有可以在编译时确定大小的类型实现该trait</p>
-<p>rust为所有泛型函数的泛型参数隐式添加Sized约束</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">generic</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// --snip--
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>实际上相当于</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">generic</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// --snip--
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>默认情况下，泛型函数只接受Sized类型，不过可以通过如下方式放宽约束</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">generic</span><span class="o">&lt;</span><span class="n">T</span>: <span class="o">?</span><span class="nb">Sized</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span>: <span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">// --snip--
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>?Sized表示类型T不一定可以确定大小，因此只能通过指针&amp;T来使用</p>
-<p>函数高级特性</p>
-<p>函数指针function pointer</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span><span class="p">()</span>-&gt;<span class="nc">T</span><span class="w"> </span><span class="p">,</span><span class="n">fn是一个类型</span><span class="err">，函数指针实现了</span><span class="nb">Fn</span><span class="p">,</span><span class="w"> </span><span class="nb">FnMut</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="nb">FnOnce</span><span class="err">，因此可以直接把函数指针作为参数传递给需要闭包的函数，推荐使用泛型及闭包</span><span class="n">trait来定义函数参数</span><span class="err">，这样既可以传入函数指针，也可以传入闭包。</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>只接受函数指针的场景：与没有闭包的外部代码交互时，例如c函数，c里没有闭包</p>
-<p><a href="https://doc.rust-lang.org/book/second-edition/ch19-05-advanced-functions-and-closures.html#returning-closures">Returning Closures</a></p>
-<p>闭包被表示为trait，因此不能直接作为函数返回值，只能通过trait object来返回</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">returns_closure</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nb">Box</span><span class="o">&lt;</span><span class="nb">Fn</span><span class="p">(</span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-
-    <div class="post-copyright">
-  <p class="copyright-item">
-    <span class="item-title">Author</span>
-    <span class="item-content"></span>
-  </p>
-  <p class="copyright-item">
-    <span class="item-title">LastMod</span>
-    <span class="item-content">
-        2017-12-15
-        
-    </span>
-  </p>
-  
-  
-</div>
-<footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/rust/">rust</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/2018-01-14.rust-string/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">string</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
-        <a class="next" href="/post/2017-12-12.rust-study-notes/">
-            <span class="next-text nav-default">学习笔记</span>
-            <span class="next-text nav-mobile">Next</span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-    <script src="https://utteranc.es/client.js"
-            repo="imhun/imhun.github.io"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by utterances.</a></noscript>
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-      <a href="mailto:m@imhun.com" class="iconfont icon-email" title="email"></a>
-      <a href="https://github.com/imhun" class="iconfont icon-github" title="github"></a>
-  
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-    Theme - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  <div class="busuanzi-footer">
-    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
-      <span class="division">|</span>
-    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
-  </div>
-
-  <span class="copyright-year">
-    &copy; 
-    2013 - 
-    2026<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
-  </span>
-</div>
-
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-
-
-
-<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
-
-
-
-
-
-
-
-
-</body>
-</html>
+To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Imhun</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Imhun</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>类型</h1><div class=post-meta><span class=post-time>2017-12-15</span><div class=post-category><a href=/categories/%E6%8A%80%E6%9C%AF/>技术</a></div><span class=more-meta>1004 words </span><span class=more-meta>3 mins read </span><span id=busuanzi_container_page_pv class=more-meta><span id=busuanzi_value_page_pv><img src=/img/spinner.svg alt=spinner.svg></span> times read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>类型</p><p>Struct</p><p>Impl block 可以有多个，但必须在定义struct的crate中</p><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#associated-types>Associated Types</a></p><p>关联类型</p><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#operator-overloading-and-default-type-parameters>Operator Overloading and Default Type Parameters</a></p><p>默认类型参数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>trait</span><span class=w> </span><span class=n>Add</span><span class=o>&lt;</span><span class=no>RHS</span><span class=o>=</span><span class=bp>Self</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>type</span> <span class=nc>Output</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>add</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span><span class=w> </span><span class=n>rhs</span>: <span class=nc>RHS</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>Self</span>::<span class=n>Output</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>2个主要的用法</p><ol><li><p>To extend a type without breaking existing code.扩展类型而不破坏已有代码</p></li><li><p>To allow customization in a way most users don’t want.一种允许自定义的方式，大多数用户可能用不到</p></li></ol><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation>Fully Qualified Syntax for Disambiguation</a></p><p>完全限定函数调用</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=o>&lt;</span><span class=n>Type</span><span class=w> </span><span class=k>as</span><span class=w> </span><span class=n>Trait</span><span class=o>&gt;</span>::<span class=n>function</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-03-advanced-traits.html#supertraits-to-use-one-traits-functionality-within-another-trait>Supertraits to Use One Trait’s Functionality Within Another Trait</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>trait继承</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>std</span>::<span class=n>fmt</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>trait</span><span class=w> </span><span class=n>OutlinePrint</span>: <span class=nc>fmt</span>::<span class=n>Display</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>fn</span> <span class=nf>outline_print</span><span class=p>(</span><span class=o>&amp;</span><span class=bp>self</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>output</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>to_string</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>len</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>output</span><span class=p>.</span><span class=n>len</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;*&#34;</span><span class=p>.</span><span class=n>repeat</span><span class=p>(</span><span class=n>len</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>4</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;*</span><span class=si>{}</span><span class=s>*&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34; &#34;</span><span class=p>.</span><span class=n>repeat</span><span class=p>(</span><span class=n>len</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>2</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;* </span><span class=si>{}</span><span class=s> *&#34;</span><span class=p>,</span><span class=w> </span><span class=n>output</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;*</span><span class=si>{}</span><span class=s>*&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34; &#34;</span><span class=p>.</span><span class=n>repeat</span><span class=p>(</span><span class=n>len</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>2</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=fm>println!</span><span class=p>(</span><span class=s>&#34;</span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=s>&#34;*&#34;</span><span class=p>.</span><span class=n>repeat</span><span class=p>(</span><span class=n>len</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>4</span><span class=p>));</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>New type pattern</p><p>实现外部类型及外部trait</p><p>类型安全及抽象，封装具体实现类型</p><p>类型别名，与原类型相同</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>type</span> <span class=nc>Kilometers</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=kt>i32</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>主要用于减少重复</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>type</span> <span class=nc>Thunk</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Box</span><span class=o>&lt;</span><span class=nb>Fn</span><span class=p>()</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nb>Send</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=nb>&#39;static</span><span class=o>&gt;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=k>type</span> <span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=nb>Result</span><span class=o>&lt;</span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>std</span>::<span class=n>io</span>::<span class=n>Error</span><span class=o>&gt;</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#the-never-type--that-never-returns>The Never Type,</a>!, that Never Returns</p><p>!：在类型理论中被称为empty type，因为该类型没有值</p><p>rust更喜欢称为Never Type，代表该类型用于函数返回类型时，表示函数从不返回(Never return)。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>bar</span><span class=p>()</span><span class=w> </span>-&gt; <span class=o>!</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// --snip--
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>上面的例子读作：函数bar返回Never，这类函数称之为：发散函数(diverging functions)</p><p>!可以强制转换为任意类型</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>panic</span><span class=o>!</span><span class=err>的返回类型为</span><span class=o>!</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#dynamically-sized-types--sized>Dynamically Sized Types &</a>Sized</p><p>又叫‘DSTs’ or ‘unsized types’，表示只能在运行时知道大小</p><p>比如str,不能为dst类型创建一个值</p><p>&amp;str有str的地址及长度。</p><p>只能把dst类型放在某种类型的指针后面</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=n>traits也是dst</span><span class=err>，只能通过指针使用，</span><span class=o>&amp;</span><span class=n>Trait</span><span class=w> </span><span class=n>or</span><span class=w> </span><span class=nb>Box</span><span class=o>&lt;</span><span class=n>Trait</span><span class=o>&gt;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-04-advanced-types.html#the-sized-trait>The</a>Sized Trait</p><p>表示是否可以在编译时确定类型大小，编译器自动为所有可以在编译时确定大小的类型实现该trait</p><p>rust为所有泛型函数的泛型参数隐式添加Sized约束</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>generic</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=p>(</span><span class=n>t</span>: <span class=nc>T</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// --snip--
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>实际上相当于</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>generic</span><span class=o>&lt;</span><span class=n>T</span>: <span class=nb>Sized</span><span class=o>&gt;</span><span class=p>(</span><span class=n>t</span>: <span class=nc>T</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// --snip--
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>默认情况下，泛型函数只接受Sized类型，不过可以通过如下方式放宽约束</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>generic</span><span class=o>&lt;</span><span class=n>T</span>: <span class=o>?</span><span class=nb>Sized</span><span class=o>&gt;</span><span class=p>(</span><span class=n>t</span>: <span class=kp>&amp;</span><span class=nc>T</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=c1>// --snip--
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>?Sized表示类型T不一定可以确定大小，因此只能通过指针&amp;T来使用</p><p>函数高级特性</p><p>函数指针function pointer</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span><span class=p>()</span>-&gt;<span class=nc>T</span><span class=w> </span><span class=p>,</span><span class=n>fn是一个类型</span><span class=err>，函数指针实现了</span><span class=nb>Fn</span><span class=p>,</span><span class=w> </span><span class=nb>FnMut</span><span class=p>,</span><span class=w> </span><span class=n>and</span><span class=w> </span><span class=nb>FnOnce</span><span class=err>，因此可以直接把函数指针作为参数传递给需要闭包的函数，推荐使用泛型及闭包</span><span class=n>trait来定义函数参数</span><span class=err>，这样既可以传入函数指针，也可以传入闭包。</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>只接受函数指针的场景：与没有闭包的外部代码交互时，例如c函数，c里没有闭包</p><p><a href=https://doc.rust-lang.org/book/second-edition/ch19-05-advanced-functions-and-closures.html#returning-closures>Returning Closures</a></p><p>闭包被表示为trait，因此不能直接作为函数返回值，只能通过trait object来返回</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>fn</span> <span class=nf>returns_closure</span><span class=p>()</span><span class=w> </span>-&gt; <span class=nb>Box</span><span class=o>&lt;</span><span class=nb>Fn</span><span class=p>(</span><span class=kt>i32</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>i32</span><span class=o>&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nb>Box</span>::<span class=n>new</span><span class=p>(</span><span class=o>|</span><span class=n>x</span><span class=o>|</span><span class=w> </span><span class=n>x</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content></span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2026-10-01
+<a href=https://github.com/imhun/imhun.github.io/commit/f767aced0c8b7c81a0ad5e449fa2e1ca83187580 title="同步 OneNote 笔记到博客，并修复图片路径">(f767ace)</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/rust/>rust</a></div><nav class=post-nav><a class=prev href=/post/2018-01-14.rust-string/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">string</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a><a class=next href=/post/2017-12-12.rust-study-notes/><span class="next-text nav-default">学习笔记</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=imhun/imhun.github.io issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:m@imhun.com class="iconfont icon-email" title=email></a><a href=https://github.com/imhun class="iconfont icon-github" title=github></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span><span class=division>|</span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span><div class=busuanzi-footer><span id=busuanzi_container_site_pv>site pv: <span id=busuanzi_value_site_pv><img src=/img/spinner.svg alt=spinner.svg></span> </span><span class=division>|</span>
+<span id=busuanzi_container_site_uv>site uv: <span id=busuanzi_value_site_uv><img src=/img/spinner.svg alt=spinner.svg></span></span></div><span class=copyright-year>&copy;
+2013 -
+2026<span class=heart><i class="iconfont icon-heart"></i></span><span></span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-G4NWL3SM8P"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-G4NWL3SM8P")}</script></body></html>
