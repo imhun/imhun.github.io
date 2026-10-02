@@ -17,10 +17,11 @@
   var COMPONENT_CSS = BASE + 'pagefind/pagefind-component-ui.css';
   var COMPONENT_JS = BASE + 'pagefind/pagefind-component-ui.js';
 
+  // viewBox 紧贴图形外沿（3..22），避免 svg 内留白把图标显小
   var SEARCH_ICON =
-    '<svg class="search-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
-    '<circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>' +
-    '<line x1="15.8" y1="15.8" x2="20.5" y2="20.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+    '<svg class="search-toggle-icon" viewBox="3 3 19 19" aria-hidden="true" focusable="false">' +
+    '<circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
+    '<line x1="15.8" y1="15.8" x2="20.5" y2="20.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
     '</svg>';
 
   var loading = null;

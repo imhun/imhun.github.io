@@ -42,13 +42,14 @@
   cursor: pointer;
   font: inherit;
   line-height: 1;
-  vertical-align: middle;
+  /* 底边与文字基线对齐（inline-flex 的基线即其底边） */
+  vertical-align: baseline;
 }
 
 .search-toggle-icon {
   display: block;
-  width: 17px;
-  height: 17px;
+  width: 19px;
+  height: 19px;
 }
 
 .search-toggle:hover,
@@ -62,10 +63,11 @@
   border-radius: 2px;
 }
 
-/* 顶栏菜单项：与文字菜单项对齐 */
+/* 顶栏菜单项：图标底边与文字基线对齐（0 偏移）。
+   这是对照 0 / -2 / -4 / -6 px 四档后选定的效果，不要再加位移 */
 .search-nav-item .search-toggle {
   position: relative;
-  top: 1px;
+  top: 0;
 }
 
 /* 移动端顶栏：右上角搜索图标 */
@@ -80,9 +82,10 @@
   color: #c05b4d;
 }
 
+/* 与汉堡按钮（20px 宽、细线）视觉等大，笔画略收细以免过重 */
 .mobile-navbar .search-toggle--bar .search-toggle-icon {
-  width: 20px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
 }
 
 /* ========== 移动端菜单项 ========== */
