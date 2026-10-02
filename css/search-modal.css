@@ -1,0 +1,102 @@
+/* ==========================================================================
+   站内搜索浮框（Pagefind Component UI）
+   - 覆盖 Pagefind 默认暗色主题变量，改成与站点一致的浅色配色
+   - 顶栏 / 移动端菜单里的搜索图标按钮样式
+   ========================================================================== */
+
+:root {
+  --pf-background: #fff;
+  --pf-text: #34495e;
+  --pf-text-secondary: #5b6b7c;
+  --pf-text-muted: #8a8a8a;
+  --pf-border: #dedede;
+  --pf-border-focus: #c05b4d;
+  --pf-hover: #f8f5ec;
+  --pf-mark: #c05b4d;
+  --pf-modal-backdrop: rgba(52, 73, 94, 0.55);
+  --pf-modal-max-width: 620px;
+  --pf-modal-top: 12dvh;
+  --pf-shadow-sm: 0 2px 8px rgba(52, 73, 94, 0.14);
+  --pf-shadow-md: 0 4px 12px rgba(52, 73, 94, 0.18);
+  --pf-shadow-lg: 0 16px 48px rgba(52, 73, 94, 0.25);
+  --pf-skeleton: #f0ece4;
+  --pf-skeleton-shine: #e6e1d8;
+  --pf-outline-focus: #c05b4d;
+  --pf-font: inherit;
+  --pf-input-height: 44px;
+  --pf-result-title-font-size: 15px;
+  --pf-result-excerpt-font-size: 13px;
+}
+
+/* ========== 顶栏搜索图标 ========== */
+
+.search-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.search-toggle-icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+}
+
+.search-toggle:hover,
+.search-toggle:focus-visible {
+  color: #c05b4d;
+}
+
+.search-toggle:focus-visible {
+  outline: 2px solid #c05b4d;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* 顶栏菜单项：与文字菜单项对齐 */
+.search-nav-item .search-toggle {
+  position: relative;
+  top: 1px;
+}
+
+/* ========== 移动端菜单项 ========== */
+
+.search-mobile-item {
+  padding: 0 !important;
+  border-bottom: 1px solid #f8f5ec;
+}
+
+.search-toggle--mobile {
+  display: flex;
+  width: 100%;
+  padding: 10px 30px;
+  font-size: 18px;
+  font-family: Athelas, STHeiti, 'Microsoft Yahei', serif;
+  color: inherit;
+  text-align: left;
+}
+
+.search-toggle-label {
+  line-height: 1.2;
+}
+
+/* ========== 浮框内的细节微调 ========== */
+
+:root pagefind-modal,
+pagefind-modal {
+  --pf-modal-max-width: 620px;
+}
+
+pagefind-modal .pf-modal,
+pagefind-modal dialog.pf-modal {
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+}
