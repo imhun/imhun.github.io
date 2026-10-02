@@ -132,13 +132,24 @@
     }
   }
 
-  function createToggle(isMobile) {
+  // variant: nav（顶栏菜单）/ bar（移动端顶栏）/ menu（移动端抽屉）
+  function createToggle(variant) {
     var button = document.createElement('button');
     button.type = 'button';
-    button.className = 'search-toggle' + (isMobile ? ' search-toggle--mobile' : '');
+    button.className = 'search-toggle';
     button.setAttribute('aria-label', '搜索本站');
+    button.setAttribute('aria-expanded', 'false');
     button.title = '搜索（⌘K / Ctrl+K）';
-    button.innerHTML = SEARCH_ICON + (isMobile ? '<span class="search-toggle-label">搜索</span>' : '');
+
+    if (variant === 'bar') {
+      button.classList.add('search-toggle--bar');
+      button.innerHTML = SEARCH_ICON;
+    } else if (variant === 'menu') {
+      button.classList.add('search-toggle--mobile');
+      button.innerHTML = SEARCH_ICON + '<span class="search-toggle-label">搜索</span>';
+    } else {
+      button.innerHTML = SEARCH_ICON;
+    }
 
     button.addEventListener('click', function () {
       closeSlideout();
@@ -155,15 +166,23 @@
     if (menu && !menu.querySelector('.search-toggle')) {
       var item = document.createElement('li');
       item.className = 'menu-item search-nav-item';
-      item.appendChild(createToggle(false));
+      item.appendChild(createToggle('nav'));
       menu.appendChild(item);
+    }
+
+    // 移动端顶栏右上角（与汉堡按钮同一行）
+    var mobileNavbar = document.getElementById('mobile-navbar');
+    if (mobileNavbar && !mobileNavbar.querySelector('.search-toggle')) {
+      var barToggle = createToggle('bar');
+      barToggle.classList.add('search-toggle--bar');
+      mobileNavbar.appendChild(barToggle);
     }
 
     var mobileMenu = document.querySelector('.mobile-menu-list');
     if (mobileMenu && !mobileMenu.querySelector('.search-toggle')) {
       var mobileItem = document.createElement('li');
       mobileItem.className = 'mobile-menu-item search-mobile-item';
-      mobileItem.appendChild(createToggle(true));
+      mobileItem.appendChild(createToggle('menu'));
       mobileMenu.appendChild(mobileItem);
     }
   }
