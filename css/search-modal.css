@@ -1,31 +1,218 @@
 /* ==========================================================================
    站内搜索浮框（Pagefind Component UI）
-   - 覆盖 Pagefind 默认暗色主题变量，改成与站点一致的浅色配色
-   - 顶栏 / 移动端菜单里的搜索图标按钮样式
+
+   ── 为什么变量要挂在 pagefind-modal 上，而不是 :root ──────────────────────
+   pagefind-component-ui.css 是 search-modal.js 在首次打开浮框时才 append 到
+   <head> 的，位置一定在本文件之后。两者都用 `:root` 声明 --pf-* 时特异性
+   相同、后者胜出，于是本文件写的主题色会被 Pagefind 默认值整个盖掉
+   （实测 --pf-text 停在 #1a1a1a、焦点环是 Pagefind 的蓝色 #0969da）。
+
+   挂到 pagefind-modal 上则不依赖顺序：自定义属性按「最近的、声明过该属性的
+   祖先」取值，pagefind-modal 比 html 更近，直接遮住 :root 上的默认值。
+
+   ── 为什么下面部分规则要写 !important ─────────────────────────────────────
+   Pagefind 的组件样式用 :is(*, #\#) 叠三层把特异性抬到 (0,3,0)，再加类名
+   变成 (0,4,0)、带 :hover/:has() 更高，且样式表在本文件之后加载。这里要改
+   的是它的默认卡片外观，没有更省事的办法，只能显式压过去。
+
+   ── 主题取值来源 ──────────────────────────────────────────────────────────
+   themes/even/assets/sass/_variables.scss（hugo-theme-even）
+   $theme-color #c05b4d / $deputy-color #f8f5ec / $global-font-color #34495e
+   $light-gray #e6e6e6 / $gray #cacaca / $dark-gray #8a8a8a / $white #fefefe
    ========================================================================== */
 
-:root {
-  --pf-background: #fff;
-  --pf-text: #34495e;
-  --pf-text-secondary: #5b6b7c;
-  --pf-text-muted: #8a8a8a;
-  --pf-border: #dedede;
-  --pf-border-focus: #c05b4d;
-  --pf-hover: #f8f5ec;
-  --pf-mark: #c05b4d;
-  --pf-modal-backdrop: rgba(52, 73, 94, 0.55);
+/* ========== 主题 token ========== */
+
+pagefind-modal {
+  /* 颜色 */
+  --pf-text: #34495e;              /* $global-font-color 正文色 */
+  --pf-text-secondary: #55606e;
+  --pf-text-muted: #8a8a8a;        /* $dark-gray */
+  --pf-background: #fefefe;        /* $white */
+  --pf-border: #e6e6e6;            /* $light-gray */
+  --pf-border-focus: #c05b4d;      /* $theme-color */
+  --pf-hover: #f8f5ec;             /* $deputy-color */
+  --pf-mark: #c05b4d;              /* 搜索命中词高亮用主题色 */
+  --pf-outline-focus: #c05b4d;
+  --pf-skeleton: #f0ece4;
+  --pf-skeleton-shine: #e8e1d5;
+  --pf-scroll-shadow: rgba(52, 73, 94, 0.12);
+
+  /* 阴影：主题本身不用投影，这里压得很轻，只为把浮框从背景里托起来 */
+  --pf-shadow-sm: 0 1px 2px rgba(52, 73, 94, 0.08);
+  --pf-shadow-md: 0 2px 8px rgba(52, 73, 94, 0.1);
+  --pf-shadow-lg: 0 8px 32px rgba(52, 73, 94, 0.16);
+  --pf-modal-backdrop: rgba(52, 73, 94, 0.5);
+
+  /* 字体 */
+  --pf-font: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+
+  /* 圆角：主题里没有圆角容器（只有头像等圆形元素），这里只做极轻微柔化 */
+  --pf-border-radius: 2px;
+
+  /* 尺寸 */
   --pf-modal-max-width: 620px;
   --pf-modal-top: 12dvh;
-  --pf-shadow-sm: 0 2px 8px rgba(52, 73, 94, 0.14);
-  --pf-shadow-md: 0 4px 12px rgba(52, 73, 94, 0.18);
-  --pf-shadow-lg: 0 16px 48px rgba(52, 73, 94, 0.25);
-  --pf-skeleton: #f0ece4;
-  --pf-skeleton-shine: #e6e1d8;
-  --pf-outline-focus: #c05b4d;
-  --pf-font: inherit;
-  --pf-input-height: 44px;
-  --pf-result-title-font-size: 15px;
-  --pf-result-excerpt-font-size: 13px;
+  --pf-input-height: 40px;
+  --pf-input-font-size: 16px;
+  --pf-summary-font-size: 13px;
+  --pf-result-title-font-size: 18px;
+  --pf-result-excerpt-font-size: 14px;
+  --pf-results-gap: 0;              /* 条目靠分隔线区分，不要间隙 */
+}
+
+/* 主题的衬线字体栈，Pagefind 没有对应变量，这里自定义一个供下面引用 */
+pagefind-modal {
+  --pf-theme-serif: Athelas, STHeiti, 'Microsoft Yahei', serif;
+}
+
+/* ========== 浮框外观 ========== */
+
+/* 桌面端：直角 + 克制的投影。窄屏下 Pagefind 会把浮框铺满全屏
+   （@media max-width:640px），那时不该再有圆角和投影。 */
+pagefind-modal .pf-modal {
+  border-radius: 2px !important;
+  box-shadow: var(--pf-shadow-lg) !important;
+}
+
+@media (max-width: 640px) {
+  pagefind-modal .pf-modal {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* 搜索框聚焦态：Pagefind 用 box-shadow: 0 0 0 2px 把输入框整个箍住，
+   视觉上像给输入框加了红边框。改成主题那种「外扩一圈」的 outline。
+   forced-colors 下保留 Pagefind 的系统色，否则高对比模式下主题色不可见。 */
+pagefind-modal .pf-input:focus-visible {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: 2px solid var(--pf-outline-focus) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px !important;
+}
+
+@media (forced-colors: active) {
+  pagefind-modal .pf-input:focus-visible {
+    outline-color: CanvasText !important;
+  }
+}
+
+/* ========== 搜索结果列表 ==========
+   对齐主题的文章列表（.posts > .post）：1px 细分隔线 + 上下留白，
+   而不是 Pagefind 默认的圆角卡片 + 间隙。 */
+
+pagefind-modal .pf-result-card {
+  display: block !important;
+  padding: 14px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--pf-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+/* 首条不画分隔线，否则列表顶部会多一条悬空的线 */
+pagefind-modal .pf-result:first-child .pf-result-card {
+  border-top: none !important;
+}
+
+pagefind-modal .pf-result-card:hover,
+pagefind-modal .pf-result-card:has([data-pf-selected]) {
+  background: transparent !important;
+  border-color: var(--pf-border) !important;
+  box-shadow: none !important;
+}
+
+/* 键盘聚焦仍要有清晰的焦点指示，用主题色描边代替 Pagefind 的整块高亮 */
+pagefind-modal .pf-result-card:has(.pf-result-link:focus-visible),
+pagefind-modal .pf-result-card:has([data-pf-selected]) {
+  outline: 2px solid var(--pf-outline-focus) !important;
+  outline-offset: 3px !important;
+}
+
+/* 标题：主题的 .post-title 和 .menu-item 都是衬线体 + 400 字重。
+   颜色要显式给 var(--pf-text)：Pagefind 在 pagefind-results 上写了
+   color: CanvasText，继承下来是系统默认色（实测 rgb(0,0,0)），不是主题正文色。 */
+pagefind-modal .pf-result-title {
+  font-family: var(--pf-theme-serif) !important;
+  font-size: var(--pf-result-title-font-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  color: var(--pf-text) !important;
+}
+
+pagefind-modal .pf-result-link {
+  color: var(--pf-text) !important;
+  text-decoration: none !important;
+}
+
+/* 复刻主题的 underline-from-center：hover 时 2px 主题色横线从中间向两侧展开
+   （见 themes/even/assets/sass/_common/_animation.scss）
+
+   主题用 ::before + left/right 过渡实现。这里改用 background-size 过渡，效果
+   一样但更省事，而且不要求 .pf-result-link 变成定位元素——
+   Pagefind 给它 ::after 设了 inset:0 撑满整张卡片当热区，一旦 relative，
+   ::after 就会缩回链接宽度，整行就点不到了。背景图方案两者兼得。 */
+/* display:inline-block 才能让 background-size 百分比相对链接自身宽度解析；
+   链接仍是 inline 时 background-size 的百分比按包含块算，会变成整行宽。 */
+pagefind-modal .pf-result-link {
+  display: inline-block !important;
+  background-image: linear-gradient(var(--pf-mark), var(--pf-mark)) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 100% !important;
+  background-size: 0 2px !important;
+  transition: background-size 0.2s ease-out !important;
+}
+
+pagefind-modal .pf-result-link:hover,
+pagefind-modal .pf-result-link:focus-visible {
+  background-size: 100% 2px !important;
+}
+
+/* 摘要：主题正文习惯多行，这里给两行；默认的 nowrap + ellipsis 会把命中
+   片段截掉，看不出匹配在哪 */
+pagefind-modal .pf-result-excerpt {
+  margin-top: 4px !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+}
+
+/* 命中词高亮：跟主题一致用主题色，而不是 Pagefind 默认的黑色加粗 */
+pagefind-modal .pf-result-excerpt mark {
+  background: transparent !important;
+  color: var(--pf-mark) !important;
+  font-weight: 700 !important;
+}
+
+/* ========== 次级结果（标题内的小节） ========== */
+
+pagefind-modal .pf-heading-chips {
+  padding-inline-start: 12px !important;
+  gap: 0 !important;
+  /* 主题用 $gray 作次级分隔线；Pagefind 没有 --pf-gray 对应变量，直接取值 */
+  border-inline-start: 1px solid #cacaca !important;
+}
+
+pagefind-modal .pf-heading-chip {
+  padding: 6px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+}
+
+pagefind-modal .pf-heading-chip:hover,
+pagefind-modal .pf-heading-chip:has([data-pf-selected]) {
+  background: transparent !important;
+  border-color: var(--pf-border) !important;
+  box-shadow: none !important;
 }
 
 /* ========== 顶栏搜索图标 ========== */
@@ -107,16 +294,4 @@
 
 .search-toggle-label {
   line-height: 1.2;
-}
-
-/* ========== 浮框内的细节微调 ========== */
-
-:root pagefind-modal,
-pagefind-modal {
-  --pf-modal-max-width: 620px;
-}
-
-pagefind-modal .pf-modal,
-pagefind-modal dialog.pf-modal {
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
